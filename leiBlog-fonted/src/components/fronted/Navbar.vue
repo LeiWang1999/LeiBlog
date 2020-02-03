@@ -1,9 +1,8 @@
 <template>
   <nav>
-    <v-app-bar flat fixed app dark class="primary">
-      <router-link to="/" class="white--text">
+    <v-app-bar flat fixed app  class="white">
+      <router-link to="/" >
         <v-toolbar-title class="headline">
-          <span>Lei</span>
           <span>Blog</span>
         </v-toolbar-title>
       </router-link>

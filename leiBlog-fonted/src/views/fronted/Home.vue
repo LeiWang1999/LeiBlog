@@ -8,7 +8,6 @@
 
     <subscribe />
 
-    <social />
   </div>
 </template>
 
@@ -20,7 +19,6 @@
       About: () => import('@/components/fronted/home/About'),
       Articles: () => import('@/components/fronted/home/Articles'),
       Banner: () => import('@/components/fronted/home/Banner'),
-      Social: () => import('@/components/fronted/home/Social'),
       Subscribe: () => import('@/components/fronted/home/Subscribe')
     }
   }

@@ -1,7 +1,7 @@
-const { User, Cbzz, Jqdt, Jszl, Tszs, Zlxz } = require("../db");
+const { User, Cbzz, Technical, Life, Tszs, Material } = require("../db");
 
-getJqdtResult = async reg => {
-  const resultJqdt = await Jqdt.find({
+getTechnicalResult = async reg => {
+  const resultTechnical = await Technical.find({
     $or: [
       //多条件，数组
       { title: { $regex: reg } },
@@ -12,88 +12,44 @@ getJqdtResult = async reg => {
   }).sort({ _id: -1 });
   let result = [];
   let obj = {};
-  resultJqdt.forEach(element => {
+  resultTechnical.forEach(element => {
     obj._id = element._id;
     obj.title = element.title;
-    obj.date = element.date;
+    obj.createtime = element.createtime;
     obj.clicktime = element.clicktime;
-    obj.type = "jqdt";
+    obj.type = element.type;
     result.push(obj);
   });
   return result;
 };
-getJszlResult = async reg => {
-  const resultJszl = await Jszl.find({
+getLifeResult = async reg => {
+  const resultLife = await Life.find({
     $or: [
       //多条件，数组
       { title: { $regex: reg } },
       { gist: { $regex: reg } },
-      { createtime: { $regex: reg } }
-      //   { content: { $regex: reg } }
+      { createtime: { $regex: reg } },
+        { content: { $regex: reg } }
     ]
   }).sort({ _id: -1 });
   let result = [];
   let obj = {};
-  resultJszl.forEach(element => {
+  resultLife.forEach(element => {
     obj._id = element._id;
     obj.title = element.title;
     obj.gist = element.gist;
     obj.date = element.createtime;
     obj.clicktime = element.clicktime;
-    obj.type = "jszl";
-    result.push(obj);
-  });
-  return result;
-};
-getTszsResult = async reg => {
-  const resultTszs = await Tszs.find({
-    $or: [
-      //多条件，数组
-      { title: { $regex: reg } },
-      { gist: { $regex: reg } },
-      { date: { $regex: reg } },
-      { content: { $regex: reg } }
-    ]
-  }).sort({ _id: -1 });
-  let result = [];
-  let obj = {};
-  resultTszs.forEach(element => {
-    obj._id = element._id;
-    obj.title = element.title;
-    obj.gist = element.gist;
-    obj.date = element.date;
-    obj.clicktime = element.clicktime;
-    obj.type = "tszs";
+    obj.type = element.type;
     result.push(obj);
   });
   return result;
 };
 
-getCbzzResult = async reg => {
-  const resultCbzz = await Cbzz.find({
-    $or: [
-      //多条件，数组
-      { name: { $regex: reg } },
-      { gist: { $regex: reg } },
-      { content: { $regex: reg } }
-    ]
-  }).sort({ _id: -1 });
-  let result = [];
-  let obj = {};
-  resultCbzz.forEach(element => {
-    obj._id = element._id;
-    obj.title = element.name;
-    obj.gist = element.gist;
-    obj.updatetime = element.updatetime;
-    obj.clicktime = element.clicktime;
-    obj.type = "cbzz";
-    result.push(obj);
-  });
-  return result;
-};
 
-getZlxzResult = async reg => {
-  const resultZlxz = await Zlxz.find({
+
+getMaterialResult = async reg => {
+  const resultMaterial = await Material.find({
     $or: [
       //多条件，数组
       { name: { $regex: reg } },
@@ -103,13 +59,13 @@ getZlxzResult = async reg => {
   }).sort({ _id: -1 });
   let result = [];
   let obj = {};
-  resultZlxz.forEach(element => {
+  resultMaterial.forEach(element => {
     obj._id = element._id;
     obj.title = element.name;
     obj.date = element.updatetime;
     obj.downloadlink = element.downloadlink;
     obj.clicktime = element.downloadtime;
-    obj.type = "zlxz";
+    obj.type = "material";
     result.push(obj);
   });
   return result;
@@ -144,19 +100,15 @@ module.exports = {
     const keywords = ctx.request.body.keywords;
     const reg = new RegExp(keywords, "i"); //不区分大小写
 
-    const resultJqdt = await getJqdtResult(reg);
-    const resultJszl = await getJszlResult(reg);
-    const resultTszs = await getTszsResult(reg);
-    const resultCbzz = await getCbzzResult(reg);
-    const resultZlxz = await getZlxzResult(reg);
+    const resultTechnical = await getTechnicalResult(reg);
+    const resultLife = await getLifeResult(reg);
+    const resultMaterial = await getMaterialResult(reg);
     let result = [];
 
     result = result.concat(
-      resultCbzz,
-      resultJqdt,
-      resultJszl,
-      resultTszs,
-      resultZlxz
+      resultTechnical,
+      resultLife,
+      resultMaterial
     );
     ctx.body = {
       success: true,

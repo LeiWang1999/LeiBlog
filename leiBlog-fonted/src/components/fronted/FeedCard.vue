@@ -22,11 +22,16 @@
               <br />
             </div>
             <p>{{value.gist}}</p>
- 
           </v-flex>
           <v-flex align-self-end>
-            <v-chip class="text-uppercase ma-0" color="primary" label small @click.stop>Read More</v-chip>
-                       <v-btn text text-color="white" small>
+            <v-chip
+              class="text-uppercase ma-0"
+              color="primary"
+              label
+              small
+              @click.stop="handleRead"
+            >Read More</v-chip>
+            <v-btn text text-color="white" small>
               <v-icon small>mdi-eye</v-icon>
               {{value.clicktime}}
             </v-btn>
@@ -49,7 +54,34 @@ export default {
       default: () => ({})
     }
   },
-
+  methods: {
+    handleRead() {
+      let articleId = this.value._id;
+      let obj = this.value;
+      if (obj.clicktime) {
+        obj.clicktime = obj.clicktime + 1;
+      } else {
+        obj["clicktime"] = 1;
+      }
+      if (obj.type === "technical") {
+        this.request
+          .post("technical/updateArticle", { Info: obj })
+          .then(res => {
+            if (res.data.success == true) {
+              this.$router.push("/techdetail/" + articleId);
+            }
+          });
+      } else if (obj.type === "life") {
+        this.request
+          .post("life/updateArticle", { Info: obj })
+          .then(res => {
+            if (res.data.success == true) {
+              this.$router.push("/lifedetail/" + articleId);
+            }
+          });
+      }
+    }
+  },
   computed: {
     classes() {
       return {

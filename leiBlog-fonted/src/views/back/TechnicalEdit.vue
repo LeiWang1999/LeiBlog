@@ -62,7 +62,7 @@ export default {
       clicktime: 0,
       alertValue: false,
       cover: [],
-      tag: String,
+      tag: "",
       coverBase64: "",
       updatetime: "",
       content: "",
@@ -203,6 +203,7 @@ export default {
         let obj = {
           _id: this.$route.params.id,
           title: this.title,
+          type: "technical",
           updatetime: this.getDate(),
           gist: this.gist,
           clicktime: this.clicktime,
@@ -223,6 +224,7 @@ export default {
         // create a new book info
         let obj = {
           title: this.title,
+          type: "technical",
           createtime: this.getDate(),
           gist: this.gist,
           tag: this.tag,

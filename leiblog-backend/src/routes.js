@@ -2,14 +2,12 @@ const Router = require("koa-router");
 const { compose } = require("koa-convert");
 const {
   UserController,
-  JqdtController,
   AboutController,
   HomeController,
   TechnicalController,
   LifeController,
   MaterialController,
   CommentController,
-  TszsController,
   HistoryController,
   RecordController
 } = require("./controllers");
@@ -19,13 +17,6 @@ const userRoutes = new Router({ prefix: "/user" })
   .get("/detail", UserController.getDetail)
   .post("/search", UserController.search)
   .post("/checkInfo", UserController.checkoutInfo);
-const jqdtRoutes = new Router({ prefix: "/jqdt" })
-  .get("/articleDetail/:id", JqdtController.getOneArticle)
-  .post("/articalList", JqdtController.getArticle)
-  .post("/saveArticle", JqdtController.saveArticle)
-  .post("/updateArticle", JqdtController.updateArticle)
-  .post("/deleteArticle", JqdtController.deleteArticle)
-  .post("/uploadImage", JqdtController.uploadImage);
 const AboutRoutes = new Router({ prefix: "/about" })
   .post("/detail", AboutController.getInfo)
   .post("/updateDetail", AboutController.updateInfo);
@@ -59,13 +50,6 @@ const CommentRoutes = new Router({ prefix: "/comment" })
   .post("/updateMessage", CommentController.updateMessage)
   .post("/deleteMessage", CommentController.deleteMessage)
   .post("/saveMessage", CommentController.saveMessage);
-const tszsRoutes = new Router({ prefix: "/tszs" })
-  .get("/articleDetail/:id", TszsController.getOneArticle)
-  .post("/articalList", TszsController.getArticle)
-  .post("/saveArticle", TszsController.saveArticle)
-  .post("/updateArticle", TszsController.updateArticle)
-  .post("/deleteArticle", TszsController.deleteArticle)
-  .post("/uploadImage", TszsController.uploadImage);
 const historyRoutes = new Router({ prefix: "/history" })
   .post("/getVisit", HistoryController.getCount)
   .post("/updateHistory", HistoryController.updateHistory);
@@ -78,13 +62,11 @@ const fileRoutes = new Router({ prefix: "/file" })
 PREFIX = "/api";
 const router = new Router({ prefix: PREFIX })
   .use(userRoutes.routes())
-  .use(jqdtRoutes.routes())
   .use(AboutRoutes.routes())
   .use(MaterialRoutes.routes())
   .use(TechnicalRoutes.routes())
   .use(LifeRoutes.routes())
   .use(CommentRoutes.routes())
-  .use(tszsRoutes.routes())
   .use(historyRoutes.routes())
   .use(recordRoutes.routes())
   .use(fileRoutes.routes())

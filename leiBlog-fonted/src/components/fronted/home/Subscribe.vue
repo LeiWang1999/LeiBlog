@@ -17,29 +17,25 @@
             md5
           >
             <base-subheading class="mb-3">
-              Subscribe
+              Comment
             </base-subheading>
             <p>
-              Enter your email address to subscribe to this blog
-              and receive notifications of new posts by email.
+              如果碰到了一些问题，你可以在留言面板进行留言，如果你不知道留言面板在哪里，点击下面这个按钮。
             </p>
 
             <v-layout
               wrap
               pa-2
             >
-              <v-text-field
-                solo
-                hide-details
-                style="max-width: 400px;"
-              />
               <v-btn
                 :block="$vuetify.breakpoint.xsOnly"
                 class="ma-0"
                 color="secondary"
                 style="height: 48px"
+                router
+                to="/comment"
               >
-                Subscribe
+                Comment
               </v-btn>
             </v-layout>
           </v-flex>
@@ -63,7 +59,7 @@
                 </v-list-item-avatar>
                 <v-list-item-title>EMAIL</v-list-item-title>
                 <v-list-item-subtitle>
-                  THEARTOFTRAVEL@GMAIL.COM
+                  2230647190@qq.com
                 </v-list-item-subtitle>
               </v-list-item>
               <v-list-item>
@@ -79,7 +75,7 @@
                 </v-list-item-avatar>
                 <v-list-item-title>ADDRESS</v-list-item-title>
                 <v-list-item-subtitle>
-                  1234 WORLD DR. HERE, TX 76123
+                  江苏省南京市浦珠南路 南京工业大学
                 </v-list-item-subtitle>
               </v-list-item>
               <v-list-item>
@@ -95,7 +91,7 @@
                 </v-list-item-avatar>
                 <v-list-item-title>PHONE</v-list-item-title>
                 <v-list-item-subtitle>
-                  555-789-1234
+                   025 - a secret
                 </v-list-item-subtitle>
               </v-list-item>
             </v-list>

@@ -203,6 +203,7 @@ export default {
         // save existed article
         let obj = {
           _id: this.$route.params.id,
+          type: "life",
           title: this.title,
           updatetime: this.getDate(),
           gist: this.gist,
@@ -222,6 +223,7 @@ export default {
         // create a new book info
         let obj = {
           title: this.title,
+          type: "life",
           createtime: this.getDate(),
           gist: this.gist,
           tag: this.tag,

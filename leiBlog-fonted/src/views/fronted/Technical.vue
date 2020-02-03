@@ -44,7 +44,6 @@ export default {
       })
         .then(res => {
           this.articleList = res.data.message;
-          window.console.log(this.articleList);
           this.length = Math.ceil(res.data.totalLength / this.limit);
         })
         .catch(err => window.console.log(err));

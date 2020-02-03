@@ -1,10 +1,10 @@
 <template lang="html">
   <div>
-    <v-footer height="auto" color="white" small>
+    <v-footer height="88"  class="justify-center">
       <v-layout row wrap>
         <span
           >Made with <v-icon small color="red lighten-1">mdi-heart</v-icon> by
-          Vuetify | Proudly Powered by Mars
+          Vuetify | Proudly Powered by Princeling
         </span>
          | 
               <div>
@@ -30,7 +30,7 @@
           >公网安备{{record2}}号</a
         >
       </v-spacer>
-      <router-link to="/admin" class="black--text">后台界面</router-link>
+      <router-link to="/admin" class="white--text">后台界面</router-link>
     </v-footer>
   </div>
 </template>

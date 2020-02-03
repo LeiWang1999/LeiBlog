@@ -28,6 +28,15 @@ const routes = [
         component: () => import("../views/fronted/Life.vue")
       },
       {
+        path: "technicaldetail/:id",
+        name: "technicaldetail",
+        component: () => import("@/views/fronted/TechnicalDetail.vue"),
+      },      {
+        path: "lifedetail/:id",
+        name: "lifedetail",
+        component: () => import("@/views/fronted/LifeDetail.vue"),
+      },
+      {
         path: "material",
         name: "material",
         component: () => import("../views/fronted/Material.vue")

@@ -26,6 +26,7 @@ module.exports = {
     for (let i = 0; i < res.length; i++) {
       const element = res[i];
       let obj = {
+        type: element["type"],
         _id: element["_id"],
         createtime: element["createtime"],
         updatetime: element["updatetime"],
@@ -84,6 +85,7 @@ module.exports = {
       if (err) throw err;
       else {
         let obj = {
+          type: articleInfo.type,
           title: articleInfo.title,
           updatetime: articleInfo.updatetime,
           gist: articleInfo.gist,

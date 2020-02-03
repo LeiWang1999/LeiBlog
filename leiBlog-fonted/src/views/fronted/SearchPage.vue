@@ -3,20 +3,14 @@
     <v-flex xs12 sm8 md6 v-for="(item,i) in articleList" :key="i" class="card-container">
       <v-card hover flat>
         <v-divider></v-divider>
-        <v-subheader v-if="item.type=='jqdt'" small>
-          <span class="red--text">所在板块:</span>近期动态
+        <v-subheader v-if="item.type=='technical'" small>
+          <span class="red--text">Location:</span>Technical
         </v-subheader>
-        <v-subheader v-if="item.type=='cbzz'" small>
-          <span class="blue--text">所在板块:</span>出版专著
+        <v-subheader v-if="item.type=='life'" small>
+          <span class="blue--text">Location:</span>Life
         </v-subheader>
-        <v-subheader v-if="item.type=='jszl'" small>
-          <span class="orange--text">所在板块:</span>技术专栏
-        </v-subheader>
-        <v-subheader v-if="item.type=='zlxz'" small>
-          <span class="green--text">所在板块:</span>资料下载
-        </v-subheader>
-        <v-subheader v-if="item.type=='tszs'" small>
-          <span class="pink--text">所在板块:</span>他山之石
+        <v-subheader v-if="item.type=='material'" small>
+          <span class="orange--text">Location:</span>Material
         </v-subheader>
 
         <v-card-title class="headline">{{item.title}}</v-card-title>
@@ -31,8 +25,7 @@
           </span>
         </v-card-text>
         <v-card-text class="content">{{item.gist}}</v-card-text>
-        <v-btn v-if="item.type=='zlxz'" color="primary" :href="item.downloadlink" text>点击下载</v-btn>
-        <v-btn v-if="item.type=='cbzz'" color="primary" :href="'/cbzzDetail/'+item._id" text>了解更多</v-btn>
+        <v-btn v-if="item.type=='material'" color="primary" :href="item.downloadlink" text>点击下载</v-btn>
         <v-btn v-else color="primary" text @click="handleRead(item._id, item.type)">阅读原文 »</v-btn>
       </v-card>
       <br />
@@ -81,7 +74,7 @@ export default {
       });
     },
     handleRead(id, type) {
-      this.$router.push("/" + type + "Detail/" + id);
+      this.$router.push("/" + type + "detail/" + id);
     }
   }
 };
