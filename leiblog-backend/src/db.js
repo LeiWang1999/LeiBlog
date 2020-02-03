@@ -43,11 +43,34 @@ const booksSchema = new mongoose.Schema({
     updatetime: String,
     clicktime: Number
 })
-//技术专栏
-const techSchema = new mongoose.Schema({
+
+const HomeSchema = new mongoose.Schema({
+    linkId:String,
+    title: String,
+    gist: String,
+    coverBase64:String,
+    proments: Array
+})
+
+// Life
+const lifeSchema = new mongoose.Schema({
     title: String,
     gist: String,
     content:String,
+    coverBase64:String,
+    tag: String,
+    videolink: String,
+    createtime: String,
+    updatetime: String,
+    clicktime: Number
+})
+// Technical
+const technicalSchema = new mongoose.Schema({
+    title: String,
+    gist: String,
+    content:String,
+    tag:String,
+    coverBase64:String,
     videolink: String,
     createtime: String,
     updatetime: String,
@@ -94,11 +117,12 @@ const Models = {
     User: mongoose.model('User', userSchema, 'user'),
     Jqdt: mongoose.model('Jqdt', articleSchema, 'jqdt'),
     Grjj: mongoose.model('Grjj', grjjSchema, 'grjj'),
-    Cbzz: mongoose.model('Cbzz', booksSchema, 'cbzz'),
-    Jszl: mongoose.model('Jszl', techSchema, 'jszl'),
+    Home: mongoose.model('Home', HomeSchema, 'home'),
+    Life: mongoose.model('Life', lifeSchema, 'life'),
+    Technical: mongoose.model('Technical', technicalSchema, 'technical'),
     Zlxz: mongoose.model('Zlxz', downloadSchema, 'zlxz'),
     Tszs: mongoose.model('Tszs', articleSchema, 'tszs'),
-    Yhly: mongoose.model('Yhly', messageSchema, 'yhly'),
+    Comment: mongoose.model('Comment', messageSchema, 'comment'),
     History: mongoose.model('History', historySchema, 'history'),
     Record: mongoose.model('Record', recordSchema, 'record')
 }

@@ -60,50 +60,40 @@ export default {
         items: [
           {
             icon: "mdi-tab",
-            title: "编辑器测试",
-            to: "/admin/editdemo"
+            title: "Home",
+            to: "/admin/homeedit"
           },
           {
             icon: "mdi-tab",
-            title: "个人简介",
-            to: "/admin/grjj"
+            title: "Technical",
+            to: "/admin/technical"
           },
           {
             icon: "mdi-tab",
-            title: "近期动态",
-            to: "/admin/jqdt"
+            title: "Life",
+            to: "/admin/life"
           },
           {
             icon: "mdi-tab",
-            title: "出版专著",
-            to: "/admin/cbzz"
+            title: "Material",
+            to: "/admin/matarial"
           },
           {
             icon: "mdi-tab",
-            title: "技术专栏",
-            to: "/admin/jszl"
+            title: "About",
+            to: "/admin/about"
           },
           {
             icon: "mdi-tab",
-            title: "资料下载",
-            to: "/admin/zlxz"
+            title: "Comment",
+            to: "/admin/comment"
           },
           {
             icon: "mdi-tab",
-            title: "用户留言",
-            to: "/admin/message"
-          },
-          {
-            icon: "mdi-tab",
-            title: "人生信条",
-            to: "/admin/table"
+            title: "备案信息",
+            to: "/admin/record"
           }
         ]
-      },
-      {
-        icon: "mdi-tab",
-        title: "选项卡",
-        to: "/admin/tabs"
       }
     ]
   }),

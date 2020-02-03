@@ -1,7 +1,8 @@
 <template>
   <v-layout column justify-center align-center class="index-container">
-    <v-flex xs12 sm8 md6 class="card-container">
-      <v-card class="card" v-for="(item,i) in news" :key="i">
+    <v-flex xs12 sm8 md6 v-for="(item,i) in news" :key="i" class="card-container">
+      <v-card hover flat>
+        <v-divider></v-divider>
         <v-card-title class="headline">{{item.title}}</v-card-title>
         <v-card-text class="post">
           <span class="post-time">
@@ -18,7 +19,11 @@
           <v-btn color="primary" text @click="handleRead(i)">阅读原文 »</v-btn>
         </v-card-actions>
       </v-card>
+      <br />
     </v-flex>
+    <div class="text-center">
+      <v-pagination total-visible="6" v-model="page" :length="length" @input="changePage"></v-pagination>
+    </div>
   </v-layout>
 </template>
 
@@ -27,24 +32,37 @@ export default {
   name: "jszl",
   data() {
     return {
+      page: 1,
+      limit: 5,
+      length: 6,
       news: []
     };
   },
   mounted() {
-    this.request({
-      method: "POST",
-      url: "/jszl/articalList"
-    })
-      .then(res => {
-        this.news = res.data.message;
-      })
-      .catch(err => window.console.log(err));
+    this.$store.commit("setLevel", 2);
+    this.$store.commit("setTitle", ["导航", "技术专栏"]);
+    this.fetchInfo();
   },
   methods: {
+    fetchInfo() {
+      this.request({
+        method: "POST",
+        url: "/jszl/articalList",
+        data: {
+          page: this.page,
+          limit: this.limit
+        }
+      })
+        .then(res => {
+          this.news = res.data.message;
+
+          this.length = Math.ceil(res.data.totalLength / this.limit);
+        })
+        .catch(err => window.console.log(err));
+    },
     handleRead(index) {
       let articleId = this.news[index]["_id"];
       let obj = this.news[index];
-      window.console.log(obj);
       if (obj.clicktime) {
         obj.clicktime = obj.clicktime + 1;
       } else {
@@ -57,6 +75,10 @@ export default {
             this.$router.push("/jszlDetail/" + articleId);
           }
         });
+    },
+    changePage(page) {
+      this.page = page;
+      this.fetchInfo();
     }
   }
 };
@@ -66,9 +88,6 @@ export default {
 .index-container {
   max-width: 1000px !important;
   margin: 0 auto;
-}
-.v-card {
-  box-shadow: none;
 }
 .card {
   background-color: rgba(255, 255, 255, 0) !important;

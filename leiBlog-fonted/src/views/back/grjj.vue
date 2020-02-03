@@ -1,29 +1,32 @@
 <template>
   <v-container fluid>
-    <v-card class="mx-auto" fluid>
-      <v-card-text>
-        <div class="text-center">上一次更新时间</div>
-        <p class="text--primary text-center">{{updatetime}}</p>
-      </v-card-text>
+    <div class="text-center">上一次更新时间</div>
+    <p class="text--primary text-center">{{updatetime}}</p>
+    <div v-ripple="{ center: true }" class="text-center">
+      <img :src="avatarBase64" class="user-header-com" />
+    </div>
+    <v-file-input
+      v-model="avatar"
+      accept="image/*"
+      prepend-icon="mdi-camera"
+      @change="changAvatar"
+      show-size
+      counter
+      label="上传头像（小于50Kb）"
+    ></v-file-input>
+    <v-textarea outlined label="个人简介" v-model="content"></v-textarea>
+    <v-text-field v-model="email" label="邮箱"></v-text-field>
+    <v-text-field v-model="phone" label="联系方式"></v-text-field>
 
-      <div v-ripple="{ center: true }" class="text-center">
-        <img :src="avatarBase64" class="user-header-com" />
-      </div>
-      <v-file-input
-        v-model="avatar"
-        accept="image/*"
-        prepend-icon="mdi-camera"
-        @change="changAvatar"
-        show-size
-        counter
-        label="上传头像（小于50Kb）"
-      ></v-file-input>
-      <v-textarea outlined label="个人简介" v-model="content"></v-textarea>
-      <v-subheader>详细信息</v-subheader>
-      <editor :api-key="apiKey" initialValue="<p>input ...</p>" :init="editorInit" v-model="detailContent"></editor>
+    <v-subheader>详细信息</v-subheader>
+    <editor
+      :api-key="apiKey"
+      initialValue="<p>input ...</p>"
+      :init="editorInit"
+      v-model="detailContent"
+    ></editor>
 
-      <v-btn block class="purple white--text" @click="updateInfo">确认修改</v-btn>
-    </v-card>
+    <v-btn block class="purple white--text" @click="updateInfo">确认修改</v-btn>
   </v-container>
 </template>
 
@@ -42,6 +45,8 @@ export default {
       updatetime: "",
       avatar: [],
       avatarBase64: "",
+      email: "",
+      phone: "",
       apiKey: "ouv7gosz4fnfvray6qdn7yqbtwsoleq7zx7jfoboixat7ivq",
       detailContent: "",
       editorInit: {
@@ -100,6 +105,8 @@ export default {
         this.content = res.content;
         this.updatetime = res.updatetime;
         this.avatarBase64 = res.avatarBase64;
+        this.email = res.email;
+        this.phone = res.phone;
         this.detailContent = res.detailContent;
       });
     },
@@ -108,9 +115,10 @@ export default {
         content: this.content,
         updatetime: this.getDate(),
         avatarBase64: this.avatarBase64,
+        email: this.email,
+        phone: this.phone,
         detailContent: this.detailContent
       };
-      window.console.log(obj)
       this.request.post("/grjj/updateDetail", { obj }).then(res => {
         let success = res.data.success;
         if (success) alert("更新成功");
@@ -123,7 +131,7 @@ export default {
       let imgSize = this.avatar.size;
       if (imgSize <= 50 * 1024) {
         // 合格
-        window.console.log("大小合适");
+        this.$snackbar.success("大小合适");
 
         // base64方法
         var reader = new FileReader();
@@ -134,7 +142,7 @@ export default {
           _this.avatarBase64 = dataURL;
         };
       } else {
-        window.console.log("大小不合适");
+        this.$snackbar.success("大小不合适");
       }
     }
   }

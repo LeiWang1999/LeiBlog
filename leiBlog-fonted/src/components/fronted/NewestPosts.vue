@@ -31,14 +31,12 @@
 </template>
 
 <script>
-  // Utilities
-  import {
-    mapState
-  } from 'vuex'
 
   export default {
-    computed: {
-      ...mapState('Info',['articles'])
+    data(){
+      return {
+        articles:[]
+      }
     }
   }
 </script>

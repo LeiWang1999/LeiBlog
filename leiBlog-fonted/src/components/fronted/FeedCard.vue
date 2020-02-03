@@ -10,7 +10,7 @@
       href="#!"
     >
       <v-img
-        :src="require(`@/assets/articles/${value.hero}`)"
+        :src="value.coverBase64"
         height="100%"
         gradient="rgba(0, 0, 0, .42), rgba(0, 0, 0, .42)"
       >
@@ -30,14 +30,17 @@
               small
               @click.stop=""
             >
-              {{ value.category }}
+              {{ value.tag }}
             </v-chip>
             <h3 class="title font-weight-bold mb-2">
               {{ value.title }}
             </h3>
             <div class="caption">
-              {{ value.author }}<br>Date
+             Date {{ value.createtime }}<br>
             </div>
+            <p>
+              {{value.gist}}
+            </p>
           </v-flex>
           <v-flex align-self-end>
             <v-chip

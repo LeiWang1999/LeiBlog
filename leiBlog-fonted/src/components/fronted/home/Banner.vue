@@ -4,7 +4,7 @@
       class="grey lighten-2"
       height="400"
       width="100%"
-      :src="require('@/assets/articles/blurcamera.jpg')"
+      :src="coverBase64"
     >
       <v-layout
         fill-height
@@ -17,20 +17,46 @@
           offset-md5
         >
           <h1 class="display-3 font-weight-light">
-            The Art Of Travel
+            {{title}}
           </h1>
           <div class="subheading text-uppercase pl-2 mb-4">
-            Finding Beauty, One flight at a time
+            {{gist}}
           </div>
           <v-btn
             color="primary"
             depressed
-            rounded
+            text
           >
-            Subscribe
+            Read More
           </v-btn>
         </v-flex>
       </v-layout>
     </v-img>
   </base-card>
 </template>
+
+<script>
+export default {
+  data(){
+    return{
+      title:"",
+      coverBase64:"",
+      gist:"",
+      linkId:"",
+    }
+  },
+  mounted(){
+      this.request.post("/home/detail").then(res => {
+        let info = res.data.data;
+        this.title = info.title;
+        this.coverBase64 = info.coverBase64;
+        this.gist = info.gist;
+        this.linkId = info.linkId;
+      });
+  }
+}
+</script>
+
+<style>
+
+</style>

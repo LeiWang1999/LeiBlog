@@ -4,42 +4,19 @@
       <v-flex xs12>
         <slot />
       </v-flex>
-
       <feed-card
         v-for="(article, i) in paginatedArticles"
-        :key="article.title"
+        :key="i"
         :size="layout[i]"
         :value="article"
       />
     </v-layout>
 
-    <v-layout align-center>
-      <v-flex xs3>
-        <base-btn v-if="page !== 1" class="ml-0" title="Previous page" square @click="page--">
-          <v-icon>mdi-chevron-left</v-icon>
-        </base-btn>
-      </v-flex>
-
-      <v-flex xs6 text-xs-center subheading>PAGE {{ page }} OF {{ pages }}</v-flex>
-
-      <v-flex xs3 text-xs-right>
-        <base-btn
-          v-if="pages > 1 && page < pages"
-          class="mr-0"
-          title="Next page"
-          square
-          @click="page++"
-        >
-          <v-icon>mdi-chevron-right</v-icon>
-        </base-btn>
-      </v-flex>
-    </v-layout>
   </v-container>
 </template>
 
 <script>
 // Utilities
-import { mapState } from "vuex";
 
 export default {
   name: "Feed",
@@ -47,29 +24,62 @@ export default {
   components: {
     FeedCard: () => import("@/components/fronted/FeedCard")
   },
-
+  mounted() {
+    this.fetchInfo();
+  },
   data: () => ({
     layout: [2, 2, 1, 2, 2, 3, 3, 3, 3, 3, 3],
-    page: 1
+    page: 1,
+    technicallimit: 6,
+    lifelimit: 5,
+    technicallength: 6,
+    lifelength: 6,
+    technicalarticles: [],
+    lifearticles: []
   }),
-
-  computed: {
-    ...mapState('Info',["articles"]),
-    pages() {
-      return Math.ceil(this.articles.length / 11);
-    },
-    paginatedArticles() {
-      const start = (this.page - 1) * 11;
-      const stop = this.page * 11;
-
-      return this.articles.slice(start, stop);
+  methods: {
+    fetchInfo() {
+      this.request({
+        method: "POST",
+        url: "/technical/articalList",
+        data: {
+          page: this.page,
+          limit: this.technicallimit
+        }
+      })
+        .then(res => {
+          this.technicalarticles = res.data.message;
+          this.technicallength = Math.ceil(
+            res.data.totalLength / this.technicallimit
+          );
+        })
+        .catch(err => window.console.log(err));
+      this.request({
+        method: "POST",
+        url: "/life/articalList",
+        data: {
+          page: this.page,
+          limit: this.lifelimit
+        }
+      })
+        .then(res => {
+          this.lifearticles = res.data.message;
+          this.lifelength = Math.ceil(res.data.totalLength / this.lifelimit);
+        })
+        .catch(err => window.console.log(err));
     }
   },
 
-  watch: {
-    page() {
-      window.scrollTo(0, 0);
+  computed: {
+    paginatedArticles() {
+      let articles = this.technicalarticles.concat(this.lifearticles);
+      return articles
+    },
+    length() {
+      let articles = this.technicalarticles.concat(this.lifearticles);
+      return Math.ceil(articles.length / 11);
     }
-  }
+  },
+
 };
 </script>

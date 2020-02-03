@@ -23,7 +23,7 @@
 
   export default {
     computed: {
-      ...mapGetters('Info',['categories'])
+      ...mapGetters(['categories'])
     }
   }
 </script>

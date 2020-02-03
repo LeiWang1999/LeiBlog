@@ -23,7 +23,7 @@ import Editor from "@tinymce/tinymce-vue";
 import plugins from "./tinymce/pliguns";
 import toolbar from "./tinymce/toolbar";
 export default {
-  name: "jqdtedit",
+  name: "tszsedit",
   components: {
     Editor
   },
@@ -102,8 +102,10 @@ export default {
         plugins: plugins,
         toolbar1: toolbar.toobar1,
         toolbar2: toolbar.toobar2,
-        images_upload_handler:(blobInfo, success) => {
-          success("data:" + blobInfo.blob().type + ";base64," + blobInfo.base64());
+        images_upload_handler: (blobInfo, success) => {
+          success(
+            "data:" + blobInfo.blob().type + ";base64," + blobInfo.base64()
+          );
         }
       }
     };
@@ -112,7 +114,7 @@ export default {
     if (this.$route.params.id) {
       // when article exist
       this.request
-        .get("/jqdt/articleDetail/" + this.$route.params.id)
+        .get("/tszs/articleDetail/" + this.$route.params.id)
         .then(res => {
           let article = res.data.info;
           this.title = article.title;
@@ -167,12 +169,11 @@ export default {
           content: this.content
         };
         this.request
-          .post("jqdt/updateArticle", { articleInfo: obj })
+          .post("tszs/updateArticle", { articleInfo: obj })
           .then(res => {
             if (res.data.success == true) {
-              this.warnningText = "保存成功";
-              this.snackbar = true;
               this.refreshArticleList();
+              this.$snackbar.success("保存成功");
             }
           });
       } else {
@@ -187,16 +188,15 @@ export default {
         };
         this.request({
           method: "post",
-          url: "/jqdt/saveArticle",
+          url: "/tszs/saveArticle",
           data: {
             articleInfo: obj
           }
         })
           .then(res => {
             if (res.data.success == true) {
-              this.warnningText = "保存成功";
-              this.snackbar = true;
               this.refreshArticleList();
+              this.$snackbar.success("保存成功");
             }
           })
           .catch(err => window.console.log(err));
@@ -204,8 +204,8 @@ export default {
     },
     // 保存成功后跳转至文章列表页
     refreshArticleList() {
-      this.$router.push({ name: "jqdtlist" });
-    },
+      this.$router.push({ name: "tszslist" });
+    }
   },
   computed: {
     isSaveDisable() {

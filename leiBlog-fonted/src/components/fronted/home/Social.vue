@@ -17,12 +17,6 @@
       >
         <newest-posts />
       </v-flex>
-      <v-flex
-        xs12
-        md4
-      >
-        <tags />
-      </v-flex>
     </v-layout>
   </v-container>
 </template>
@@ -32,7 +26,6 @@
     components: {
       NewestPosts: () => import('@/components/fronted/NewestPosts'),
       Instagram: () => import('@/components/fronted/Instagram'),
-      Tags: () => import('@/components/fronted/Tags')
     }
   }
 </script>

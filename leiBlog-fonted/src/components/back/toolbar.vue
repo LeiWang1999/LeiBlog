@@ -45,8 +45,8 @@
                             </v-list-item-avatar>
 
                             <v-list-item-content>
-                            <v-list-item-title>Admin</v-list-item-title>
-                            <v-list-item-subtitle>南京工业大学信息中心</v-list-item-subtitle>
+                            <v-list-item-title>Princeling</v-list-item-title>
+                            <v-list-item-subtitle>全干工程师</v-list-item-subtitle>
                             </v-list-item-content>
 
                             <v-list-item-action>

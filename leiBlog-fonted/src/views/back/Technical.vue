@@ -4,11 +4,8 @@
       <v-dialog v-model="dialog" width="500">
         <v-card>
           <v-card-title primary-title big class="red--text">提示</v-card-title>
-
           <v-card-text big class="black--text">删除不可撤销，确定删除？</v-card-text>
-
           <v-divider></v-divider>
-
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="red" text @click="handleDelete">确定</v-btn>
@@ -28,7 +25,8 @@
           <tr>
             <th class="text-center">标题</th>
             <th class="text-center">简介</th>
-            <th class="text-center">视频链接</th>
+            <th class="text-center">创建时间</th>
+            <th class="text-center">标签</th>
             <th class="text-center">操作</th>
           </tr>
         </thead>
@@ -38,7 +36,8 @@
             <td>
               {{ item.gist }}
             </td>
-            <td>{{ item.videolink }}</td>
+            <td>{{ item.createtime }}</td>
+            <td>{{ item.tag }}</td>
             <td>
               <v-btn text color="primary" @click="handleEdit(i)">编辑</v-btn>
               <v-btn text color="red" @click="showDialog(i)">删除</v-btn>
@@ -52,7 +51,7 @@
 
 <script>
 export default {
-  name: "jszl",
+  name: "technical",
   data() {
     return {
       news: [],
@@ -63,7 +62,7 @@ export default {
   mounted() {
     this.request({
       method: "POST",
-      url: "/jszl/articalList"
+      url: "/technical/articalList"
     })
       .then(res => {
         this.news = res.data.message;
@@ -74,7 +73,7 @@ export default {
     fetchData() {
       this.request({
         method: "POST",
-        url: "/jszl/articalList"
+        url: "/technical/articalList"
       })
         .then(res => {
           this.news = res.data.message;
@@ -82,11 +81,11 @@ export default {
         .catch(err => window.console.log(err));
     },
     handleAdd() {
-      this.$router.push("/admin/jszledit");
+      this.$router.push("/admin/technicaledit");
     },
     handleEdit(index) {
       let articleId = this.news[index]["_id"];
-      this.$router.push("/admin/jszledit/" + articleId);
+      this.$router.push("/admin/technicaledit/" + articleId);
     },
     handleDelete() {
       this.dialog = false;
@@ -94,7 +93,7 @@ export default {
       let articleId = this.news[index]["_id"];
       this.request({
         method: "POST",
-        url: "/jszl/deleteArticle",
+        url: "/technical/deleteArticle",
         data: { articleId: articleId }
       })
         .then(res => {

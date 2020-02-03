@@ -1,7 +1,7 @@
 <template>
   <v-container grid-list-xl>
     <v-layout row wrap>
-      <v-flex xs12 sm12>
+      <v-flex offset-xs2 xs12 md8>
         <Info :source="source" />
         <Player :source="source" />
       </v-flex>
@@ -18,20 +18,27 @@ export default {
     Info,
     Player
   },
-  data(){
-    return{
-      source:{}
-    }
+  data() {
+    return {
+      source: {}
+    };
   },
-  mounted(){
-        if (this.$route.params.id) {
+  mounted() {
+    if (this.$route.params.id) {
       // when article exist
       this.request
         .get("/jszl/articleDetail/" + this.$route.params.id)
         .then(res => {
-         this.source =  res.data.info;
+          this.source = res.data.info;
+
+          this.$store.commit("setLevel", 3);
+          this.$store.commit("setTitle", [
+            "导航",
+            "技术专栏",
+            this.source.title
+          ]);
         });
-        }
+    }
   }
 };
 </script>

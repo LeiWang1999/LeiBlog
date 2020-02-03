@@ -8,33 +8,35 @@
     <v-subheader class="black--text">软件名称</v-subheader>
     <v-text-field v-model="name" label="请输入软件名称" :rules="namerules" hide-details="auto"></v-text-field>
     <v-subheader class="black--text">请输入视软件简介</v-subheader>
-     <v-textarea
-          filled
-          name="input-7-4"
-          label="简介"
-          v-model="gist"
-          :rules="gistrules"
-         ></v-textarea>
+    <v-textarea filled name="input-7-4" label="简介" v-model="gist" :rules="gistrules"></v-textarea>
     <v-divider></v-divider>
-        <v-subheader class="black--text">下载链接</v-subheader>
+    <v-subheader class="black--text">下载链接</v-subheader>
     <v-text-field v-model="downloadlink" label="请输入下载链接" hide-details="auto"></v-text-field>
     <v-divider></v-divider>
-            <v-subheader class="black--text">上传文件</v-subheader>
-      <v-file-input show-size label="上传文件"></v-file-input>
-    <br />
-    <v-btn :disabled="!isSaveDisable" block class="pink" @click="saveArticle">点我保存</v-btn>
+    <v-card>
+      <v-card-actions>
+        <v-file-input v-model="file" @change="changeFile" show-size label="上传文件"></v-file-input>
+      </v-card-actions>
+      <v-card-text>
+        <v-subheader>上传进度:{{uploadPercentage}}%</v-subheader>
+        <v-progress-linear :value="uploadPercentage" :color="color" height="7"></v-progress-linear>
+      </v-card-text>
+    </v-card>
+    <v-btn :disabled="!isSaveDisable" block class="pink" @click="saveFile">点我保存</v-btn>
   </v-container>
 </template>
 
 <script>
 export default {
-  name: "jszledit",
+  name: "zlxzedit",
   data() {
     return {
+            uploadPercentage: 0,
       snackbar: false,
       warnningText: "",
       alertValue: false,
       updatetime: "",
+      file: [],
       name: "",
       gist: "",
       downloadlink: "",
@@ -114,9 +116,9 @@ export default {
       if (mm < 10) mm = "0" + mm;
       if (ss < 10) ss = "0" + ss;
       let date = y + "-" + m + "-" + d + " " + hh + ":" + mm + ":" + ss;
-      return date
+      return date;
     },
-    saveArticle() {
+    saveFile() {
       if (this.name.length === 0) {
         this.warnningText = "标题不能为空!";
         this.snackbar = true;
@@ -142,15 +144,12 @@ export default {
           gist: this.gist,
           downloadlink: this.downloadlink
         };
-        this.request
-          .post("zlxz/updateFile", { fileInfo: obj })
-          .then(res => {
-            if (res.data.success == true) {
-              this.warnningText = "保存成功";
-              this.snackbar = true;
-              this.refreshFileList();
-            }
-          });
+        this.request.post("zlxz/updateFile", { fileInfo: obj }).then(res => {
+          if (res.data.success == true) {
+            this.refreshFileList();
+            this.$snackbar.success("保存成功");
+          }
+        });
       } else {
         // create a new file info
         let obj = {
@@ -168,9 +167,8 @@ export default {
         })
           .then(res => {
             if (res.data.success == true) {
-              this.warnningText = "保存成功";
-              this.snackbar = true;
               this.refreshFileList();
+              this.$snackbar.success("保存成功");
             }
           })
           .catch(err => window.console.log(err));
@@ -179,6 +177,59 @@ export default {
     // 保存成功后跳转至文章列表页
     refreshFileList() {
       this.$router.push({ name: "zlxzlist" });
+    },
+    async changeFile(file) {
+      let _this = this;
+
+      let bytesPerPiece = 1 * 256 * 1024; //切片大小
+      let start = 0;
+      let end;
+      let index = 0;
+      let file_size = file.size;
+      let file_name = file.name;
+      let totalPieces = Math.ceil(file_size / bytesPerPiece);
+      let timestamp = new Date().getTime();
+      while (start < file_size) {
+        end = start + bytesPerPiece;
+        if (end > file_size) {
+          end = file_size;
+        }
+        let chunk = file.slice(start, end); //执行切片操作
+        let sliceName = file_name + "." + index;
+        let formData = new FormData();
+        formData.append("timestamp", timestamp);
+        formData.append("name", sliceName);
+        formData.append("size", file_size);
+        formData.append("total", totalPieces);
+        formData.append("index", index);
+        formData.append("file", chunk); //将表单id、文件、文件名输入form表单中，如果第三个参数不设置，则默认使用blob作为文件名
+        let res1 = await _this.request.post("/file/uploadBigFile", formData);
+        if (res1.data.code == 1) {
+          _this.uploadPercentage = Math.ceil(((index + 1) / totalPieces) * 100);
+          start = end;
+          index++;
+        } else {
+          this.$snackbar.success("文件上传失败,请重新上传");
+          return;
+        }
+      }
+      let formDataFinish = new FormData();
+      formDataFinish.append("timestamp", timestamp);
+      formDataFinish.append("name", file_name);
+      formDataFinish.append("size", file_size);
+      formDataFinish.append("total", totalPieces);
+
+      this.request
+        .post("/file/uploadBigFileFinish", formDataFinish)
+        .then(res => {
+          if (res.data.code == 1) {
+            this.uploadPercentage = 0;
+            this.downloadlink = res.data.data.downloadPath;
+            this.$snackbar.success("文件上传成功");
+          } else {
+            this.$snackbar.success("文件上传失败,请重新上传");
+          }
+        });
     }
   },
   computed: {
@@ -189,6 +240,11 @@ export default {
         this.gistRule1State &&
         this.gistRule2State
       );
+    },
+    color() {
+      return ["error", "warning", "success"][
+        Math.floor(this.uploadPercentage / 40)
+      ];
     }
   }
 };

@@ -1,4 +1,4 @@
-const Yhly = require("../db").Yhly;
+const Comment = require("../db").Comment;
 
 getAll = async Messages => {
   let dataSend = [];
@@ -35,12 +35,12 @@ module.exports = {
       page = 1;
     }
 
-    let Messages = await Yhly.find()
+    let Messages = await Comment.find()
       .sort({ _id: -1 })
       .skip((page - 1) * limit)
       .limit(limit);
     let { dataSend, dataReplied } = await getAll(Messages);
-    let totalLength = await Yhly.find({'isreplied':true}).countDocuments();
+    let totalLength = await Comment.find({'isreplied':true}).countDocuments();
     ctx.body = {
       success: true,
       message: dataSend,
@@ -51,7 +51,7 @@ module.exports = {
   saveMessage: async ctx => {
     let request = ctx.request;
     let Info = request.body["info"];
-    let newMsh = new Yhly(Info);
+    let newMsh = new Comment(Info);
     await newMsh.save(err => {
       if (err) throw err;
       else {
@@ -71,7 +71,7 @@ module.exports = {
     let request = ctx.request;
     let Info = request.body["info"];
     console.log(Info);
-    await Yhly.findById(Info._id, (err, res) => {
+    await Comment.findById(Info._id, (err, res) => {
       if (err) throw err;
       else {
         let obj = {
@@ -79,7 +79,7 @@ module.exports = {
           replycontent: Info["replycontent"],
           replytime: Info["replytime"]
         };
-        Yhly.updateOne({ _id: Info._id }, obj, err => {
+        Comment.updateOne({ _id: Info._id }, obj, err => {
           if (err) throw err;
           else console.log("更新" + Info._id + "成功");
         });
@@ -93,7 +93,7 @@ module.exports = {
   deleteMessage: async ctx => {
     let request = ctx.request;
     let Id = request.body["id"];
-    await Yhly.deleteOne({ _id: Id }, (err, res) => {
+    await Comment.deleteOne({ _id: Id }, (err, res) => {
       if (err) throw err;
     });
     ctx.body = {

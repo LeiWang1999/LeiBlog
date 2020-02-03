@@ -1,4 +1,4 @@
-const Jszl = require("../db").Jszl;
+const Life = require("../db").Life;
 const fileStorePath = require("../../config").fileStorePath;
 const fileServerPath = require("../../config").fileServerPath;
 const multiparty = require("multiparty");
@@ -17,8 +17,8 @@ module.exports = {
       page = 1;
     }
     let limit = ctx.request.body.limit;
-    let totalLength = await Jszl.countDocuments();
-    let res = await Jszl.find({})
+    let totalLength = await Life.countDocuments();
+    let res = await Life.find({})
       .sort({ _id: -1 })
       .skip((page - 1) * limit)
       .limit(limit);
@@ -30,8 +30,10 @@ module.exports = {
         createtime: element["createtime"],
         updatetime: element["updatetime"],
         content: element["content"],
+        tag: element["tag"],
         title: element["title"],
         gist: element["gist"],
+        coverBase64: element["coverBase64"],
         videolink: element["videolink"],
         clicktime: element["clicktime"]
       };
@@ -43,14 +45,9 @@ module.exports = {
       totalLength: totalLength
     };
   },
-  getNewestArticle: async ctx => {
-    let request = ctx.request;
-    let limit = request.body["limit"];
-    await Jszl.find().sort({ _id: -1 });
-  },
   getOneArticle: async ctx => {
     let articleId = ctx.params.id;
-    await Jszl.findOne({ _id: articleId }, (err, res) => {
+    await Life.findOne({ _id: articleId }, (err, res) => {
       if (err) throw err;
       else {
         ctx.body = {
@@ -62,8 +59,8 @@ module.exports = {
   },
   saveArticle: async ctx => {
     let request = ctx.request;
-    let articleInfo = request.body["articleInfo"];
-    let newArticle = new Jszl(articleInfo);
+    let Info = request.body["Info"];
+    let newArticle = new Life(Info);
     await newArticle.save(err => {
       if (err) throw err;
       else {
@@ -81,20 +78,22 @@ module.exports = {
   },
   updateArticle: async ctx => {
     let request = ctx.request;
-    let articleInfo = request.body["articleInfo"];
+    let articleInfo = request.body["Info"];
     console.log(articleInfo);
-    await Jszl.findById(articleInfo._id, (err, res) => {
+    await Life.findById(articleInfo._id, (err, res) => {
       if (err) throw err;
       else {
         let obj = {
           title: articleInfo.title,
           updatetime: articleInfo.updatetime,
           gist: articleInfo.gist,
+          tag: articleInfo.tag,
           content: articleInfo.content,
+          coverBase64: articleInfo.coverBase64,
           videolink: articleInfo.videolink,
           clicktime: articleInfo.clicktime
         };
-        Jszl.updateOne({ _id: articleInfo._id }, obj, err => {
+        Life.updateOne({ _id: articleInfo._id }, obj, err => {
           if (err) throw err;
           else console.log("更新" + articleInfo._id + "成功");
         });
@@ -109,7 +108,7 @@ module.exports = {
     let request = ctx.request;
     let articleId = request.body["articleId"];
     console.log(articleId);
-    await Jszl.deleteOne({ _id: articleId }, (err, res) => {
+    await Life.deleteOne({ _id: articleId }, (err, res) => {
       if (err) throw err;
     });
     ctx.body = {

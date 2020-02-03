@@ -62,9 +62,9 @@
                   </v-icon>
                 </v-list-item-avatar>
                 <v-list-item-title>EMAIL</v-list-item-title>
-                <v-subheader>
+                <v-list-item-subtitle>
                   THEARTOFTRAVEL@GMAIL.COM
-                </v-subheader>
+                </v-list-item-subtitle>
               </v-list-item>
               <v-list-item>
                 <v-list-item-avatar
@@ -78,9 +78,9 @@
                   </v-icon>
                 </v-list-item-avatar>
                 <v-list-item-title>ADDRESS</v-list-item-title>
-                <v-subheader>
+                <v-list-item-subtitle>
                   1234 WORLD DR. HERE, TX 76123
-                </v-subheader>
+                </v-list-item-subtitle>
               </v-list-item>
               <v-list-item>
                 <v-list-item-avatar
@@ -94,9 +94,9 @@
                   </v-icon>
                 </v-list-item-avatar>
                 <v-list-item-title>PHONE</v-list-item-title>
-                <v-subheader>
+                <v-list-item-subtitle>
                   555-789-1234
-                </v-subheader>
+                </v-list-item-subtitle>
               </v-list-item>
             </v-list>
           </v-flex>
@@ -105,13 +105,3 @@
     </base-card>
   </v-container>
 </template>
-
-<script>
-export default {
-  name: "subscribe"
-}
-</script>
-
-<style>
-
-</style>

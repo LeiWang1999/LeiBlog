@@ -15,42 +15,62 @@ const routes = [
       {
         path: "home",
         name: "home",
-        component: () => import("../views/fronted/Home.vue")
+        component: () => import("../views/fronted/Home.vue"),
       },
       {
         path: "jqdt",
         name: "jqdt",
-        component: () => import("../views/fronted/Jqdt.vue")
+        component: () => import("../views/fronted/Jqdt.vue"),
       },
       {
         path: "jqdtDetail/:id",
         name: "jqdtdetail",
-        component: () => import("../views/fronted/JqdtDetail.vue")
+        component: () => import("../views/fronted/JqdtDetail.vue"),
       },
       {
         path: "cbzz",
         name: "cbzz",
-        component: () => import("../views/fronted/Cbzz.vue")
+        component: () => import("../views/fronted/Cbzz.vue"),
+      },
+      {
+        path: "cbzzDetail/:id",
+        name: "cbzzdetail",
+        component: () => import("../views/fronted/CbzzDetail.vue"),
       },
       {
         path: "jszl",
         name: "jszl",
-        component: () => import("../views/fronted/Jszl.vue")
+        component: () => import("../views/fronted/Jszl.vue"),
       },
       {
         path: "jszlDetail/:id",
         name: "jszldetail",
-        component: () => import("../views/fronted/JszlDetail.vue")
+        component: () => import("../views/fronted/JszlDetail.vue"),
       },
       {
         path: "zlxz",
         name: "zlxz",
-        component: () => import("../views/fronted/Zlxz.vue")
+        component: () => import("../views/fronted/Zlxz.vue"),
+      },
+      {
+        path: "tszs",
+        name: "tszs",
+        component: () => import("../views/fronted/Tszs.vue"),
+      },
+      {
+        path: "tszsDetail/:id",
+        name: "tszsdetail",
+        component: () => import("../views/fronted/TszsDetail.vue"),
       },
       {
         path: "yhlt",
         name: "yhlt",
-        component: () => import("../views/fronted/Yhlt.vue")
+        component: () => import("../views/fronted/Yhlt.vue"),
+      },
+      {
+        path: "search/:keywords",
+        name: "search",
+        component: () => import("../views/fronted/SearchPage.vue"),
       }
     ]
   },
@@ -67,152 +87,72 @@ const routes = [
       {
         path: "home",
         name: "Home",
-        component: () => import("@/views/back/home"),
+        component: () => import("@/views/back/Home"),
         meta: {
           title: "首页"
         }
-      },
+      },     
       {
-        path: "tabs",
-        name: "Tabs",
-        component: () => import("@/views/back/tabs"),
+        path: "homeedit",
+        name: "homeedit",
+        component: () => import("@/views/back/HomeEdit"),
         meta: {
-          title: "选项卡"
+          title: "Home-Edit"
         }
       },
       {
-        path: "editdemo",
-        name: "EditDemo",
-        component: () => import("@/views/back/EditDemo"),
+        path: "technical",
+        name: "technicallist",
+        component: () => import("@/views/back/Technical"),
         meta: {
-          title: "编辑测试"
+          title: "Technical"
         }
       },
       {
-        path: "jqdt",
-        name: "jqdtlist",
-        component: () => import("@/views/back/jqdt"),
+        path: "technicaledit",
+        name: "technicaledit",
+        component: () => import("@/views/back/TechnicalEdit"),
         meta: {
-          title: "近期动态"
+          title: "Technical-New"
         }
       },
       {
-        path: "jqdtedit",
-        name: "jqdtedit",
-        component: () => import("@/views/back/jqdtEdit"),
+        path: "technicaledit/:id",
+        name: "technicalupdate",
+        component: () => import("@/views/back/TechnicalEdit"),
         meta: {
-          title: "近期动态-新增"
+          title: "Technical-Edit"
+        }
+      },      {
+        path: "life",
+        name: "lifelist",
+        component: () => import("@/views/back/Life"),
+        meta: {
+          title: "Life"
         }
       },
       {
-        path: "jqdtedit/:id",
-        name: "jqdtupdate",
-        component: () => import("@/views/back/jqdtEdit"),
+        path: "lifeedit",
+        name: "lifeedit",
+        component: () => import("@/views/back/LifeEdit"),
         meta: {
-          title: "近期动态-编辑"
+          title: "Life-New"
         }
       },
       {
-        path: "grjj",
-        name: "grjjadmin",
-        component: () => import("@/views/back/grjj"),
+        path: "lifeedit/:id",
+        name: "lifeupdate",
+        component: () => import("@/views/back/LifeEdit"),
         meta: {
-          title: "个人简介"
+          title: "Life-Edit"
         }
       },
       {
-        path: "cbzz",
-        name: "cbzzlist",
-        component: () => import("@/views/back/cbzz"),
+        path: "record",
+        name: "record",
+        component: () => import("@/views/back/Record"),
         meta: {
-          title: "出版专著"
-        }
-      },
-      {
-        path: "cbzzedit",
-        name: "cbzzedit",
-        component: () => import("@/views/back/cbzzEdit"),
-        meta: {
-          title: "出版专著-新增"
-        }
-      },
-      {
-        path: "cbzzedit/:id",
-        name: "cbzzupdate",
-        component: () => import("@/views/back/cbzzEdit"),
-        meta: {
-          title: "出版专著-编辑"
-        }
-      },
-      {
-        path: "jszl",
-        name: "jszllist",
-        component: () => import("@/views/back/jszl"),
-        meta: {
-          title: "技术专栏"
-        }
-      },
-      {
-        path: "jszledit",
-        name: "jszledit",
-        component: () => import("@/views/back/jszlEdit"),
-        meta: {
-          title: "技术专栏-新增"
-        }
-      },
-      {
-        path: "jszledit/:id",
-        name: "jszlupdate",
-        component: () => import("@/views/back/jszlEdit"),
-        meta: {
-          title: "技术专栏-编辑"
-        }
-      },
-      {
-        path: "zlxz",
-        name: "zlxzlist",
-        component: () => import("@/views/back/zlxz"),
-        meta: {
-          title: "资料下载"
-        }
-      },
-      {
-        path: "zlxzedit",
-        name: "zlxzedit",
-        component: () => import("@/views/back/zlxzEdit"),
-        meta: {
-          title: "资料下载-新增"
-        }
-      },
-      {
-        path: "zlxzedit/:id",
-        name: "zlxzupdate",
-        component: () => import("@/views/back/zlxzEdit"),
-        meta: {
-          title: "资料下载-编辑"
-        }
-      },
-      {
-        path: "message",
-        name: "message",
-        component: () => import("@/views/back/yhly"),
-        meta: {
-          title: "用户留言"
-        }
-      }
-    ]
-  },
-  {
-    path: "/admin",
-    component: Layout,
-    redirect: "/table",
-    children: [
-      {
-        path: "table",
-        name: "Table",
-        component: () => import("@/views/back/table"),
-        meta: {
-          title: "表格"
+          title: "备案信息"
         }
       }
     ]
@@ -237,10 +177,10 @@ router.beforeEach((to, from, next) => {
     } else {
       next();
     }
-  }else if(to.path.indexOf("admin") === -1){
+  } else if (to.path.indexOf("admin") === -1) {
     next();
   } else {
-      if (localStorage.getItem("accessToken")) {
+    if (localStorage.getItem("accessToken")) {
       store.commit("setTabs", {
         name: to.meta.title,
         href: to.path

@@ -1,48 +1,31 @@
 <template>
-  <v-container data-title="软件" grid-list-xl>
-    <v-layout row wrap>
-      <v-flex xs12 md8>
-        <div class="search-option">
-          <v-text-field label="请输入软件名称搜索" v-model="keywords" @keyup.enter="search" solo></v-text-field>
-          <v-btn style="margin-left: 20px" @click="search" depressed>搜索</v-btn>
-        </div>
-        <v-list class="software-list">
-          <li class="software-item" :key="index" v-for="(file, index) in files">
-            <div class="software-header">
-              <div class="software-info">
-                <span>
-                  <label>下载次数：</label>
-                  <strong>{{ file.downloadtime }}</strong>
-                </span>
-              </div>
-              <div class="software-download">
-                  <v-btn :href="file.downloadlink" @click="updateCount(index)" style="right: 0;" depressed>下载</v-btn>
-              </div>
-            </div>
-            <div class="software-content">
-              <span>
-                <label>软件名称：</label>
-                <strong>{{ file.name }}</strong>
-              </span>
-              <p :class="file.expand ? '' : 'intro'">
-                <label>介绍：</label>
-                {{ file.gist }}
-              </p>
-              <div
-                @click="
-                    files[index].expand = !files[index].expand
-                  "
-                class="expand-pointer"
-              >
-                <v-icon v-if="!file.expand">mdi-chevron-down</v-icon>
-                <v-icon v-if="file.expand">mdi-chevron-up</v-icon>
-              </div>
-            </div>
-          </li>
-        </v-list>
+  <div>
+    <v-layout column justify-center align-center class="index-container">
+      <v-flex xs12 sm8 md6 v-for="(item,i) in files" :key="i" class="card-container">
+        <v-card hover flat>
+          <v-divider></v-divider>
+          <v-card-title class="headline">{{item.name}}</v-card-title>
+          <v-card-text class="post">
+            <span class="post-time">
+              <v-icon small>mdi-calendar-month-outline</v-icon>
+              发表于{{item.updatetime}}
+            </span>
+            <span>
+              <v-icon small>mdi-view</v-icon>
+              下载次数 {{item.downloadtime}}
+            </span>
+          </v-card-text>
+          <v-card-text class="content">{{item.gist}}</v-card-text>
+          <v-btn color="primary" text :href="item.downloadlink">点击下载</v-btn>
+        </v-card>
+        <br />
       </v-flex>
     </v-layout>
-  </v-container>
+
+    <div class="text-center">
+      <v-pagination total-visible="6" v-model="page" :length="length" @input="changePage"></v-pagination>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -50,181 +33,85 @@ export default {
   name: "Zlxz",
   data() {
     return {
+      page: 1,
+      limit: 6,
+      length: 0,
       keywords: "",
       files: [],
       currentPage: 1
     };
   },
   mounted() {
+    this.$store.commit("setLevel", 2);
+    this.$store.commit("setTitle", ["导航", "资料下载"]);
     this.fetchData();
     this.files.forEach(element => {
-        element.expand = false;
+      element.expand = false;
     });
   },
   methods: {
     fetchData() {
       this.request({
         method: "POST",
-        url: "/zlxz/fileList"
+        url: "/zlxz/fileList",
+        data: {
+          page: this.page,
+          limit: this.limit
+        }
       })
         .then(res => {
           this.files = res.data.message;
+          this.length = Math.ceil(res.data.totalLength / this.limit);
         })
         .catch(err => window.console.log(err));
     },
     search() {},
     updateCount(index) {
       let obj = this.files[index];
-      window.console.log(obj);
       if (obj.downloadtime) {
         obj.downloadtime = obj.downloadtime + 1;
       } else {
         obj["downloadtime"] = 1;
       }
       this.request.post("zlxz/updateFile", { fileInfo: obj });
+    },
+    changePage(page) {
+      this.page = page;
+      this.fetchData();
     }
   }
 };
 </script>
 
-<style scoped lang="scss">
-label {
-  color: #4d5256 !important;
-  font-weight: 500;
+<style lang="less" scoped>
+.index-container {
+  max-width: 1000px !important;
+  margin: 0 auto;
 }
 
-.search-option {
-  margin-bottom: -15px;
-  display: flex;
-  align-items: baseline;
-
-  button {
-    margin-right: 0;
+.card {
+  background-color: rgba(255, 255, 255, 0) !important;
+  &:not(:last-child) {
+    border-bottom: 1px dotted #aaa;
   }
 }
-
-img {
-  vertical-align: middle;
+.card:not(:first-child) {
+  margin-top: 40px !important;
 }
-
-.list {
-  list-style: none;
-  padding-left: 0;
+.card-container {
+  width: 90%;
 }
-
-.list li {
-  list-style: none;
-  font-size: 14px;
-  margin-top: 12px;
-  color: #666;
-  font-weight: 500;
-}
-
-.list a {
-  color: #666;
-  font-weight: 500;
-  display: inline-block;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  vertical-align: middle;
-  text-decoration: none;
-}
-
-.list a:hover {
-  color: #000000;
-  text-decoration: underline;
-}
-
-.play-count {
-  float: right;
-}
-
-.software-item {
-  display: flex;
-  flex-direction: column;
-  border-radius: 4px !important;
-  border-bottom: 1px solid #ebeef5;
-  margin-bottom: 15px;
-
-  .software-header {
-    display: flex;
-    padding: 5px 0 5px;
-    align-items: center;
-    justify-content: space-between;
-
-    .software-info {
-      display: flex;
-
-      span {
-        margin-right: 10px;
-        font-size: 14px;
-        color: #666;
-        font-weight: 500;
-      }
-    }
-
-    .software-download {
-      .v-btn {
-        min-height: 20px;
-      }
-
-      a {
-        text-decoration: none;
-      }
-    }
-  }
-
-  .software-content {
-    color: #666;
-    font-weight: 500;
-    padding: 0 5px 5px 0;
-
-    p {
-      margin-top: 10px;
-      margin-bottom: 0;
-      color: #666;
-      font-weight: 500;
-    }
-
-    div {
-      text-align: center;
-    }
-
-    .intro {
-      color: #666;
-      font-weight: 500;
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 3;
-    }
+.post {
+  padding-bottom: 8px;
+  font-size: 12px;
+  &-class {
+    margin: 0 6px;
+    padding: 0 6px;
+    border-left: 1px solid #aaa;
+    border-right: 1px solid #aaa;
   }
 }
-
-.expand-pointer {
-  text-align: center;
-  cursor: pointer;
-}
-</style>
-
-<style lang="scss">
-.search-option {
-  .v-input__control {
-    min-height: 36px !important;
-  }
-}
-
-.hot-software {
-  .v-card__text {
-    margin-top: -10px;
-  }
-}
-
-@media all and (min-width: 700px) {
-  .hot-software {
-    position: sticky;
-    top: 72px;
-  }
+.content {
+  padding-top: 0;
 }
 </style>

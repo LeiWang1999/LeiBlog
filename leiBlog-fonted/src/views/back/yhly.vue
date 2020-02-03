@@ -155,7 +155,7 @@ export default {
         if (res.data.success == true) {
 
           this.fetchData();
-        } else window.console.log(res);
+        }
       });
     },
     handleDelete() {

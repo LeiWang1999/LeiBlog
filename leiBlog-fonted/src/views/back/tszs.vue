@@ -4,11 +4,8 @@
       <v-dialog v-model="dialog" width="500">
         <v-card>
           <v-card-title primary-title big class="red--text">提示</v-card-title>
-
           <v-card-text big class="black--text">删除不可撤销，确定删除？</v-card-text>
-
           <v-divider></v-divider>
-
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="red" text @click="handleDelete">确定</v-btn>
@@ -53,7 +50,7 @@
 
 <script>
 export default {
-  name: "jqdt",
+  name: "tszs",
   data() {
     return {
       news: [],
@@ -64,7 +61,7 @@ export default {
   mounted() {
     this.request({
       method: "POST",
-      url: "/jqdt/articalList"
+      url: "/tszs/articalList"
     })
       .then(res => {
         this.news = res.data.message;
@@ -75,7 +72,7 @@ export default {
     fetchData() {
       this.request({
         method: "POST",
-        url: "/jqdt/articalList"
+        url: "/tszs/articalList"
       })
         .then(res => {
           this.news = res.data.message;
@@ -83,11 +80,11 @@ export default {
         .catch(err => window.console.log(err));
     },
     handleAdd() {
-      this.$router.push("/admin/jqdtedit");
+      this.$router.push("/admin/tszsedit");
     },
     handleEdit(index) {
       let articleId = this.news[index]["_id"];
-      this.$router.push("/admin/jqdtedit/" + articleId);
+      this.$router.push("/admin/tszsedit/" + articleId);
     },
     handleDelete() {
       this.dialog = false;
@@ -95,7 +92,7 @@ export default {
       let articleId = this.news[index]["_id"];
       this.request({
         method: "POST",
-        url: "/jqdt/deleteArticle",
+        url: "/tszs/deleteArticle",
         data: { articleId: articleId }
       })
         .then(res => {

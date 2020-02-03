@@ -56,6 +56,7 @@
           </v-card>
         </v-col>
       </v-row>
+      <v-pagination total-visible="6" v-model="page" :length="length" @input="changePage"></v-pagination>
     </v-container>
     <v-snackbar v-model="snackbar" :timeout="1500" :top="true">{{warnningText}}</v-snackbar>
   </div>
@@ -66,6 +67,9 @@ export default {
   name: "yhlt",
   data() {
     return {
+      page: 1,
+      limit: 6,
+      length: 0,
       messages: [
         {
           _id: String,
@@ -97,16 +101,26 @@ export default {
     };
   },
   mounted() {
-    this.request({
-      method: "POST",
-      url: "/yhly/messageList"
-    })
-      .then(res => {
-        this.messages = res.data.showMessage;
-      })
-      .catch(err => window.console.log(err));
+      this.$store.commit("setLevel", 2);
+    this.$store.commit("setTitle", ["导航", "用户留言"]);
+    this.fetchInfo();
   },
   methods: {
+    fetchInfo() {
+      this.request({
+        method: "POST",
+        url: "/yhly/messageList",
+        data: {
+          page: this.page,
+          limit: this.limit
+        }
+      })
+        .then(res => {
+          this.messages = res.data.showMessage;
+          this.length = Math.ceil(res.data.totalLength / this.limit);
+        })
+        .catch(err => window.console.log(err));
+    },
     getDate: function() {
       let mydate, y, m, d, hh, mm, ss;
       mydate = new Date();
@@ -123,6 +137,10 @@ export default {
       if (ss < 10) ss = "0" + ss;
       let date = y + "-" + m + "-" + d + " " + hh + ":" + mm + ":" + ss;
       return date;
+    },
+    changePage(page) {
+      this.page = page;
+      this.fetchInfo();
     },
     handleCommit() {
       let obj = this.formData;
@@ -163,7 +181,7 @@ export default {
 
           this.warnningText = "添加成功，等待审核与回复。";
           this.snackbar = true;
-        } else window.console.log(res);
+        } 
       });
     }
   }
