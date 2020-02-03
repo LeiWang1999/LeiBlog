@@ -1,0 +1,7 @@
+exports.UserController = require('./user.controller')
+exports.JqdtController = require('./jqdt.controller')
+exports.GrjjController = require('./grjj.controller')
+exports.CbzzController = require('./cbzz.controller')
+exports.JszlController = require('./jszl.controller')
+exports.ZlxzController = require('./zlxz.controller')
+exports.YhlyController = require('./yhly.controller')

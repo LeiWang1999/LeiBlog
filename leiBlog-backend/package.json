@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "koa": "^2.11.0",
+    "koa-body": "^4.1.1",
+    "koa-router": "^7.4.0",
+    "koa2-cors": "^2.0.6",
+    "mongoose": "^5.8.7",
+    "multiparty": "^4.2.1",
+    "mysql2": "^2.0.1",
+    "sequelize": "^5.21.2",
+    "tedious": "^6.6.2"
+  }
+}
