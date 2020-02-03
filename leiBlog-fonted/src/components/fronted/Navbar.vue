@@ -39,7 +39,7 @@ export default {
         { text: "Life", route: "/cbzz" },
         { text: "Material", route: "/tszs" },
         { text: "About Me", route: "/tszs" },
-        { text: "Comment", route: "/yhlt" }
+        { text: "Comment", route: "/comment" }
       ]
     };
   },

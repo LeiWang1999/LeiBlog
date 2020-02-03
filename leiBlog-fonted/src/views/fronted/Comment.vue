@@ -64,7 +64,7 @@
 
 <script>
 export default {
-  name: "yhlt",
+  name: "comment",
   data() {
     return {
       page: 1,
@@ -109,7 +109,7 @@ export default {
     fetchInfo() {
       this.request({
         method: "POST",
-        url: "/yhly/messageList",
+        url: "/comment/messageList",
         data: {
           page: this.page,
           limit: this.limit
@@ -173,7 +173,7 @@ export default {
 
       this.request({
         method: "POST",
-        url: "/yhly/saveMessage",
+        url: "/comment/saveMessage",
         data: { info: obj }
       }).then(res => {
         if (res.data.success == true) {

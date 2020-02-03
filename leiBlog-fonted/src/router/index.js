@@ -63,9 +63,9 @@ const routes = [
         component: () => import("../views/fronted/TszsDetail.vue"),
       },
       {
-        path: "yhlt",
-        name: "yhlt",
-        component: () => import("../views/fronted/Yhlt.vue"),
+        path: "comment",
+        name: "comment-fonted",
+        component: () => import("../views/fronted/Comment.vue"),
       },
       {
         path: "search/:keywords",
@@ -145,6 +145,14 @@ const routes = [
         component: () => import("@/views/back/LifeEdit"),
         meta: {
           title: "Life-Edit"
+        }
+      },
+      {
+        path: "comment",
+        name: "comment",
+        component: () => import("@/views/back/Comment"),
+        meta: {
+          title: "Comment"
         }
       },
       {

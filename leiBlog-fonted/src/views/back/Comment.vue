@@ -90,7 +90,7 @@
 
 <script>
 export default {
-  name: "yhly",
+  name: "comment",
   data() {
     return {
       messages: [
@@ -136,7 +136,7 @@ export default {
     fetchData() {
       this.request({
         method: "POST",
-        url: "/yhly/messageList"
+        url: "/comment/messageList"
       })
         .then(res => {
           this.messages = res.data.message;
@@ -149,7 +149,7 @@ export default {
       obj.replytime = this.getDate();
       this.request({
         method: "POST",
-        url: "/yhly/updateMessage",
+        url: "/comment/updateMessage",
         data: { info: obj }
       }).then(res => {
         if (res.data.success == true) {
@@ -164,7 +164,7 @@ export default {
       let messageId = this.messages[index]["_id"];
       this.request({
         method: "POST",
-        url: "/yhly/deleteMessage",
+        url: "/comment/deleteMessage",
         data: { id: messageId }
       })
         .then(res => {

@@ -9,7 +9,7 @@ const {
   TechnicalController,
   LifeController,
   ZlxzController,
-  YhlyController,
+  CommentController,
   TszsController,
   HistoryController,
   RecordController
@@ -62,11 +62,11 @@ const zlxzRoutes = new Router({ prefix: "/zlxz" })
   .post("/updateFile", ZlxzController.updateFile)
   .post("/deleteFile", ZlxzController.deleteFile)
   .post("/uploadfile", ZlxzController.uploadFile);
-const yhlyRoutes = new Router({ prefix: "/yhly" })
-  .post("/messageList", YhlyController.getMessage)
-  .post("/updateMessage", YhlyController.updateMessage)
-  .post("/deleteMessage", YhlyController.deleteMessage)
-  .post("/saveMessage", YhlyController.saveMessage);
+const CommentRoutes = new Router({ prefix: "/comment" })
+  .post("/messageList", CommentController.getMessage)
+  .post("/updateMessage", CommentController.updateMessage)
+  .post("/deleteMessage", CommentController.deleteMessage)
+  .post("/saveMessage", CommentController.saveMessage);
 const tszsRoutes = new Router({ prefix: "/tszs" })
   .get("/articleDetail/:id", TszsController.getOneArticle)
   .post("/articalList", TszsController.getArticle)
@@ -91,7 +91,7 @@ const router = new Router({ prefix: PREFIX })
   .use(cbzzRoutes.routes())
   .use(TechnicalRoutes.routes())
   .use(LifeRoutes.routes())
-  .use(yhlyRoutes.routes())
+  .use(CommentRoutes.routes())
   .use(tszsRoutes.routes())
   .use(historyRoutes.routes())
   .use(recordRoutes.routes())
