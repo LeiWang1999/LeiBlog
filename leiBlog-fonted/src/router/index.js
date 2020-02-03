@@ -15,66 +15,38 @@ const routes = [
       {
         path: "home",
         name: "home",
-        component: () => import("../views/fronted/Home.vue"),
+        component: () => import("../views/fronted/Home.vue")
       },
       {
         path: "technical",
         name: "technical",
-        component: () => import("../views/fronted/Technical.vue"),
-      },      {
+        component: () => import("../views/fronted/Technical.vue")
+      },
+      {
         path: "life",
         name: "life",
-        component: () => import("../views/fronted/Life.vue"),
+        component: () => import("../views/fronted/Life.vue")
       },
       {
-        path: "jqdtDetail/:id",
-        name: "jqdtdetail",
-        component: () => import("../views/fronted/JqdtDetail.vue"),
+        path: "material",
+        name: "material",
+        component: () => import("../views/fronted/Material.vue")
       },
       {
-        path: "cbzz",
-        name: "cbzz",
-        component: () => import("../views/fronted/Cbzz.vue"),
-      },
-      {
-        path: "cbzzDetail/:id",
-        name: "cbzzdetail",
-        component: () => import("../views/fronted/CbzzDetail.vue"),
-      },
-      {
-        path: "jszl",
-        name: "jszl",
-        component: () => import("../views/fronted/Jszl.vue"),
-      },
-      {
-        path: "jszlDetail/:id",
-        name: "jszldetail",
-        component: () => import("../views/fronted/JszlDetail.vue"),
-      },
-      {
-        path: "zlxz",
-        name: "zlxz",
-        component: () => import("../views/fronted/Zlxz.vue"),
-      },
-      {
-        path: "tszs",
-        name: "tszs",
-        component: () => import("../views/fronted/Tszs.vue"),
-      },
-      {
-        path: "tszsDetail/:id",
-        name: "tszsdetail",
-        component: () => import("../views/fronted/TszsDetail.vue"),
+
+        path: "about",
+        name: "about",
+        component: () => import("../views/fronted/About.vue")
       },
       {
         path: "comment",
         name: "comment-fonted",
-        component: () => import("../views/fronted/Comment.vue"),
+        component: () => import("../views/fronted/Comment.vue")
       },
       {
         path: "search/:keywords",
         name: "search",
-        component: () => import("../views/fronted/SearchPage.vue"),
+        component: () => import("../views/fronted/SearchPage.vue")
       }
     ]
   },
@@ -95,7 +67,7 @@ const routes = [
         meta: {
           title: "首页"
         }
-      },     
+      },
       {
         path: "homeedit",
         name: "homeedit",
@@ -127,7 +99,8 @@ const routes = [
         meta: {
           title: "Technical-Edit"
         }
-      },      {
+      },
+      {
         path: "life",
         name: "lifelist",
         component: () => import("@/views/back/Life"),
@@ -149,6 +122,38 @@ const routes = [
         component: () => import("@/views/back/LifeEdit"),
         meta: {
           title: "Life-Edit"
+        }
+      },
+      {
+        path: "material",
+        name: "materiallist",
+        component: () => import("@/views/back/Material"),
+        meta: {
+          title: "Material"
+        }
+      },
+      {
+        path: "materialedit",
+        name: "materialedit",
+        component: () => import("@/views/back/MaterialEdit"),
+        meta: {
+          title: "Material-New"
+        }
+      },
+      {
+        path: "materialedit/:id",
+        name: "materialupdate",
+        component: () => import("@/views/back/MaterialEdit"),
+        meta: {
+          title: "Material-Edit"
+        }
+      },
+      {
+        path: "about",
+        name: "about",
+        component: () => import("@/views/back/About"),
+        meta: {
+          title: "About"
         }
       },
       {

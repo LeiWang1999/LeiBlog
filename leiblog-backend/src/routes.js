@@ -3,12 +3,11 @@ const { compose } = require("koa-convert");
 const {
   UserController,
   JqdtController,
-  GrjjController,
-  CbzzController,
+  AboutController,
   HomeController,
   TechnicalController,
   LifeController,
-  ZlxzController,
+  MaterialController,
   CommentController,
   TszsController,
   HistoryController,
@@ -27,16 +26,9 @@ const jqdtRoutes = new Router({ prefix: "/jqdt" })
   .post("/updateArticle", JqdtController.updateArticle)
   .post("/deleteArticle", JqdtController.deleteArticle)
   .post("/uploadImage", JqdtController.uploadImage);
-const grjjRoutes = new Router({ prefix: "/grjj" })
-  .post("/detail", GrjjController.getInfo)
-  .post("/updateDetail", GrjjController.updateInfo);
-const cbzzRoutes = new Router({ prefix: "/cbzz" })
-  .get("/bookDetail/:id", CbzzController.getOneBook)
-  .post("/bookList", CbzzController.getBooks)
-  .post("/saveBook", CbzzController.saveBook)
-  .post("/updateBook", CbzzController.updateBook)
-  .post("/deleteBook", CbzzController.deleteBook);
-
+const AboutRoutes = new Router({ prefix: "/about" })
+  .post("/detail", AboutController.getInfo)
+  .post("/updateDetail", AboutController.updateInfo);
 const HomeRoutes = new Router({ prefix: "/home" })
   .post("/detail", HomeController.getInfo)
   .post("/updateDetail", HomeController.updateInfo);
@@ -55,13 +47,13 @@ const LifeRoutes = new Router({ prefix: "/life" })
   .post("/updateArticle", LifeController.updateArticle)
   .post("/deleteArticle", LifeController.deleteArticle)
   .post("/uploadfile", LifeController.uploadFile);
-const zlxzRoutes = new Router({ prefix: "/zlxz" })
-  .get("/fileDetail/:id", ZlxzController.getOneFile)
-  .post("/fileList", ZlxzController.getFile)
-  .post("/saveFile", ZlxzController.saveFile)
-  .post("/updateFile", ZlxzController.updateFile)
-  .post("/deleteFile", ZlxzController.deleteFile)
-  .post("/uploadfile", ZlxzController.uploadFile);
+const MaterialRoutes = new Router({ prefix: "/material" })
+  .get("/fileDetail/:id", MaterialController.getOneFile)
+  .post("/fileList", MaterialController.getFile)
+  .post("/saveFile", MaterialController.saveFile)
+  .post("/updateFile", MaterialController.updateFile)
+  .post("/deleteFile", MaterialController.deleteFile)
+  .post("/uploadfile", MaterialController.uploadFile);
 const CommentRoutes = new Router({ prefix: "/comment" })
   .post("/messageList", CommentController.getMessage)
   .post("/updateMessage", CommentController.updateMessage)
@@ -87,8 +79,8 @@ PREFIX = "/api";
 const router = new Router({ prefix: PREFIX })
   .use(userRoutes.routes())
   .use(jqdtRoutes.routes())
-  .use(grjjRoutes.routes())
-  .use(cbzzRoutes.routes())
+  .use(AboutRoutes.routes())
+  .use(MaterialRoutes.routes())
   .use(TechnicalRoutes.routes())
   .use(LifeRoutes.routes())
   .use(CommentRoutes.routes())

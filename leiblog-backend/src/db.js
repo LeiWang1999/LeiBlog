@@ -25,23 +25,13 @@ const articleSchema = new mongoose.Schema({
     clicktime: Number
 })
 //个人简介
-const grjjSchema = new mongoose.Schema({
+const AboutSchema = new mongoose.Schema({
     content:String,
     updatetime:String,
     avatarBase64: String,
     email: String,
     phone: String,
     detailContent: String
-})
-//出版专著
-const booksSchema = new mongoose.Schema({
-    name: String,
-    gist: String,
-    content: String,
-    coverBase64: String,
-    buylink: String,
-    updatetime: String,
-    clicktime: Number
 })
 
 const HomeSchema = new mongoose.Schema({
@@ -116,11 +106,11 @@ const recordSchema = new mongoose.Schema({
 const Models = {
     User: mongoose.model('User', userSchema, 'user'),
     Jqdt: mongoose.model('Jqdt', articleSchema, 'jqdt'),
-    Grjj: mongoose.model('Grjj', grjjSchema, 'grjj'),
+    About: mongoose.model('About', AboutSchema, 'about'),
     Home: mongoose.model('Home', HomeSchema, 'home'),
     Life: mongoose.model('Life', lifeSchema, 'life'),
     Technical: mongoose.model('Technical', technicalSchema, 'technical'),
-    Zlxz: mongoose.model('Zlxz', downloadSchema, 'zlxz'),
+    Material: mongoose.model('Material', downloadSchema, 'material'),
     Tszs: mongoose.model('Tszs', articleSchema, 'tszs'),
     Comment: mongoose.model('Comment', messageSchema, 'comment'),
     History: mongoose.model('History', historySchema, 'history'),

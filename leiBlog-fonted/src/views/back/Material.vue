@@ -4,11 +4,8 @@
       <v-dialog v-model="dialog" width="500">
         <v-card>
           <v-card-title primary-title big class="red--text">提示</v-card-title>
-
           <v-card-text big class="black--text">删除不可撤销，确定删除？</v-card-text>
-
           <v-divider></v-divider>
-
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="red" text @click="handleDelete">确定</v-btn>
@@ -50,7 +47,7 @@
 
 <script>
 export default {
-  name: "jszl",
+  name: "material",
   data() {
     return {
       files: [],
@@ -65,7 +62,7 @@ export default {
     fetchData() {
       this.request({
         method: "POST",
-        url: "/zlxz/fileList"
+        url: "/material/fileList"
       })
         .then(res => {
           this.files = res.data.message;
@@ -73,11 +70,11 @@ export default {
         .catch(err => window.console.log(err));
     },
     handleAdd() {
-      this.$router.push("/admin/zlxzedit");
+      this.$router.push("/admin/materialedit");
     },
     handleEdit(index) {
       let fileId = this.files[index]["_id"];
-      this.$router.push("/admin/zlxzedit/" + fileId);
+      this.$router.push("/admin/materialedit/" + fileId);
     },
     handleDelete() {
       this.dialog = false;
@@ -85,7 +82,7 @@ export default {
       let fileId = this.files[index]["_id"];
       this.request({
         method: "POST",
-        url: "/zlxz/deleteFile",
+        url: "/material/deleteFile",
         data: { fileId: fileId }
       })
         .then(res => {

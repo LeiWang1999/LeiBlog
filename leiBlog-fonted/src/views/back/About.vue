@@ -35,7 +35,7 @@ import Editor from "@tinymce/tinymce-vue";
 import plugins from "./tinymce/pliguns";
 import toolbar from "./tinymce/toolbar";
 export default {
-  name: "grjjAdmin",
+  name: "aboutAdmin",
   components: {
     Editor
   },
@@ -100,7 +100,7 @@ export default {
       return time;
     },
     fetchInfo() {
-      this.request.post("/grjj/detail").then(data => {
+      this.request.post("/about/detail").then(data => {
         let res = data.data.res;
         this.content = res.content;
         this.updatetime = res.updatetime;
@@ -119,9 +119,10 @@ export default {
         phone: this.phone,
         detailContent: this.detailContent
       };
-      this.request.post("/grjj/updateDetail", { obj }).then(res => {
+      this.request.post("/about/updateDetail", { obj }).then(res => {
         let success = res.data.success;
-        if (success) alert("更新成功");
+        if (success == true) this.$snackbar.success("更新成功");
+        else this.$snackbar.success("出现未知错误");
         this.fetchInfo();
       });
     },

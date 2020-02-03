@@ -59,6 +59,7 @@ export default {
       uploadPercentage: 0,
       snackbar: false,
       warnningText: "",
+      clicktime: 0,
       alertValue: false,
       cover: [],
       tag: String,
@@ -153,6 +154,7 @@ export default {
           this.title = article.title;
           this.content = article.content;
           this.coverBase64 = article.coverBase64;
+          this.clicktime = article.clicktime;
           this.updatetime = article.updatetime;
           this.tag = article.tag;
           this.gist = article.gist;
@@ -203,6 +205,7 @@ export default {
           title: this.title,
           updatetime: this.getDate(),
           gist: this.gist,
+          clicktime: this.clicktime,
           tag: this.tag,
           coverBase64: this.coverBase64,
           content: this.content,
@@ -224,6 +227,7 @@ export default {
           gist: this.gist,
           tag: this.tag,
           coverBase64: this.coverBase64,
+          clicktime: 0,
           content: this.content,
           videolink: this.videolink
         };

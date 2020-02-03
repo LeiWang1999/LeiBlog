@@ -76,7 +76,7 @@ export default {
           {
             icon: "mdi-tab",
             title: "Material",
-            to: "/admin/matarial"
+            to: "/admin/material"
           },
           {
             icon: "mdi-tab",

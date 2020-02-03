@@ -1,4 +1,4 @@
-const Zlxz = require("../db").Zlxz;
+const Material = require("../db").Material;
 const fileStorePath = require("../../config").fileStorePath;
 const fileServerPath = require("../../config").fileServerPath;
 const multiparty = require("multiparty");
@@ -17,8 +17,8 @@ module.exports = {
     if (!page) {
       page = 1;
     }
-    let totalLength = await Zlxz.countDocuments();
-    let res = await Zlxz.find({})
+    let totalLength = await Material.countDocuments();
+    let res = await Material.find({})
       .sort({ _id: -1 })
       .skip((page - 1) * limit)
       .limit(limit);
@@ -45,7 +45,7 @@ module.exports = {
 
   getOneFile: async ctx => {
     let fileId = ctx.params.id;
-    await Zlxz.findOne({ _id: fileId }, (err, res) => {
+    await Material.findOne({ _id: fileId }, (err, res) => {
       if (err) throw err;
       else {
         ctx.body = {
@@ -58,7 +58,7 @@ module.exports = {
   saveFile: async ctx => {
     let request = ctx.request;
     let fileInfo = request.body["info"];
-    let newFile = new Zlxz(fileInfo);
+    let newFile = new Material(fileInfo);
     await newFile.save(err => {
       if (err) throw err;
       else {
@@ -78,7 +78,7 @@ module.exports = {
     let request = ctx.request;
     let fileInfo = request.body["fileInfo"];
     console.log(fileInfo);
-    await Zlxz.findById(fileInfo._id, (err, res) => {
+    await Material.findById(fileInfo._id, (err, res) => {
       if (err) throw err;
       else {
         let obj = {
@@ -88,7 +88,7 @@ module.exports = {
           downloadlink: fileInfo.downloadlink,
           downloadtime: fileInfo.downloadtime
         };
-        Zlxz.updateOne({ _id: fileInfo._id }, obj, err => {
+        Material.updateOne({ _id: fileInfo._id }, obj, err => {
           if (err) throw err;
           else console.log("更新" + fileInfo._id + "成功");
         });
@@ -103,7 +103,7 @@ module.exports = {
     let request = ctx.request;
     let fileId = request.body["fileId"];
     console.log(fileId);
-    await Zlxz.deleteOne({ _id: fileId }, (err, res) => {
+    await Material.deleteOne({ _id: fileId }, (err, res) => {
       if (err) throw err;
     });
     ctx.body = {

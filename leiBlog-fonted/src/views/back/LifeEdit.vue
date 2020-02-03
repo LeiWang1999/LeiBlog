@@ -63,6 +63,7 @@ export default {
       alertValue: false,
       tag: "",
       cover: [],
+      clicktime:0,
       coverBase64: "",
       updatetime: "",
       content: "",
@@ -154,6 +155,7 @@ export default {
           this.title = article.title;
           this.content = article.content;
           this.tag = article.tag;
+          this.clicktime = article.clicktime;
           this.coverBase64 = article.coverBase64;
           this.updatetime = article.updatetime;
           this.gist = article.gist;
@@ -205,6 +207,7 @@ export default {
           updatetime: this.getDate(),
           gist: this.gist,
           tag: this.tag,
+          clicktime: this.clicktime,
           coverBase64: this.coverBase64,
           content: this.content,
           videolink: this.videolink
@@ -223,6 +226,7 @@ export default {
           gist: this.gist,
           tag: this.tag,
           coverBase64: this.coverBase64,
+          clicktime: 0,
           content: this.content,
           videolink: this.videolink
         };

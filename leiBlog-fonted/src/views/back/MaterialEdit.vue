@@ -28,7 +28,7 @@
 
 <script>
 export default {
-  name: "zlxzedit",
+  name: "materialedit",
   data() {
     return {
             uploadPercentage: 0,
@@ -90,7 +90,7 @@ export default {
     if (this.$route.params.id) {
       // when file exist
       this.request
-        .get("/zlxz/fileDetail/" + this.$route.params.id)
+        .get("/material/fileDetail/" + this.$route.params.id)
         .then(res => {
           let file = res.data.info;
           this.name = file.name;
@@ -144,7 +144,7 @@ export default {
           gist: this.gist,
           downloadlink: this.downloadlink
         };
-        this.request.post("zlxz/updateFile", { fileInfo: obj }).then(res => {
+        this.request.post("material/updateFile", { fileInfo: obj }).then(res => {
           if (res.data.success == true) {
             this.refreshFileList();
             this.$snackbar.success("保存成功");
@@ -160,7 +160,7 @@ export default {
         };
         this.request({
           method: "post",
-          url: "/zlxz/saveFile",
+          url: "/material/saveFile",
           data: {
             info: obj
           }
@@ -176,7 +176,7 @@ export default {
     },
     // 保存成功后跳转至文章列表页
     refreshFileList() {
-      this.$router.push({ name: "zlxzlist" });
+      this.$router.push({ name: "materiallist" });
     },
     async changeFile(file) {
       let _this = this;
