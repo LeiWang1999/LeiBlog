@@ -1,10 +1,10 @@
 <template>
   <nav>
-    <v-app-bar fixed app dark class="primary">
-      <router-link to="/" class="white--text">
+    <v-app-bar flat fixed app  class="white">
+      <router-link to="/" class="black--text">
         <v-toolbar-title class="headline">
-          <span>Blcui</span>
-          <span>的个人主页</span>
+          <span>Lei </span>
+          <span>Blog</span>
         </v-toolbar-title>
       </router-link>
       <v-spacer></v-spacer>

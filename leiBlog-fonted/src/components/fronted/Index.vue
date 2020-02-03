@@ -12,7 +12,7 @@
 
 <script>
 import Navbar from "@/components/fronted/Navbar";
-import pageFooter from "@/components/fronted/pageFooter";
+import pageFooter from "@/components/fronted/core/Footer";
 export default {
   name: "fontedindex",
   components: {

@@ -10,19 +10,6 @@ import Sparkline from '@/components/back/Sparkline'
 
 export default {
     name: 'home',
-    data() {
-        return {
-            carousel: [
-                {
-                    src: require('@/assets/timg01.jpg')
-                }, {
-                    src: require('@/assets/timg02.jpg')
-                }, {
-                    src: require('@/assets/timg03.jpg')
-                }
-            ]
-        }
-    },
     components: {
         Sparkline
     }
