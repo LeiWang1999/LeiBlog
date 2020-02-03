@@ -18,9 +18,13 @@ const routes = [
         component: () => import("../views/fronted/Home.vue"),
       },
       {
-        path: "jqdt",
-        name: "jqdt",
-        component: () => import("../views/fronted/Jqdt.vue"),
+        path: "technical",
+        name: "technical",
+        component: () => import("../views/fronted/Technical.vue"),
+      },      {
+        path: "life",
+        name: "life",
+        component: () => import("../views/fronted/Life.vue"),
       },
       {
         path: "jqdtDetail/:id",

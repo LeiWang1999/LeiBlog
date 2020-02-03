@@ -35,10 +35,10 @@ export default {
       keywords: "",
       links: [
         { text: "Home", route: "/" },
-        { text: "Technical", route: "/jqdt" },
-        { text: "Life", route: "/cbzz" },
-        { text: "Material", route: "/tszs" },
-        { text: "About Me", route: "/tszs" },
+        { text: "Technical", route: "/technical" },
+        { text: "Life", route: "/life" },
+        { text: "Material", route: "/material" },
+        { text: "About Me", route: "/about" },
         { text: "Comment", route: "/comment" }
       ]
     };

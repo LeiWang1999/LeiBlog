@@ -1,38 +1,26 @@
 <template>
-  <div>
-    <v-layout column justify-center align-center class="index-container">
-      <v-flex xs12 class="card-container" v-for="(item,i) in articleList" :key="i">
-        <v-card hover flat>
-          <v-divider></v-divider>
-          <v-card-title class="headline">{{item.title}}</v-card-title>
-          <v-card-text class="post">
-            <span class="post-time">
-              <v-icon small>mdi-calendar-month-outline</v-icon>
-              发表于{{item.date}}
-            </span>
-            <span>
-              <v-icon small>mdi-view</v-icon>
-              阅读次数 {{item.clicktime}}
-            </span>
-          </v-card-text>
-          <v-card-text class="content">{{item.gist}}</v-card-text>
-          <v-btn color="primary" text @click="handleRead(i)">阅读原文 »</v-btn>
-        </v-card>
-        <br />
+  <v-container grid-list-xl>
+    <v-layout wrap>
+      <v-flex xs12>
+        <slot />
       </v-flex>
+      <feed-card v-for="(article, i) in articleList" :key="i" :size="layout[i]" :value="article" />
     </v-layout>
-
     <div class="text-center">
       <v-pagination total-visible="6" v-model="page" :length="length" @input="changePage"></v-pagination>
     </div>
-  </div>
+  </v-container>
 </template>
 
 <script>
 export default {
-  name: "jszl",
+  name: "technical",
+  components: {
+    FeedCard: () => import("@/components/fronted/FeedCard")
+  },
   data() {
     return {
+      layout: [2, 2, 3, 3, 3],
       length: 0,
       page: 1,
       limit: 5,
@@ -48,7 +36,7 @@ export default {
     fetchInfo() {
       this.request({
         method: "POST",
-        url: "/jqdt/articalList",
+        url: "/technical/articalList",
         data: {
           page: this.page,
           limit: this.limit
@@ -56,13 +44,14 @@ export default {
       })
         .then(res => {
           this.articleList = res.data.message;
+          window.console.log(this.articleList);
           this.length = Math.ceil(res.data.totalLength / this.limit);
         })
         .catch(err => window.console.log(err));
     },
     handleRead(index) {
       let articleId = this.articleList[index]["_id"];
-      this.$router.push("/jqdtDetail/" + articleId);
+      this.$router.push("/technicalDetail/" + articleId);
     },
     changePage(page) {
       this.page = page;
