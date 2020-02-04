@@ -1,5 +1,5 @@
 module.exports = {
     allowed_url: "*",
-    fileStorePath: "/Users/wanglei/Documents/GitHub/WebEngineer/Project",
-    fileServerPath: "http://10.3.68.135:7878"
+    fileStorePath: "/home/princeling/share",
+    fileServerPath: "http://49.235.205.19:7878"
 }
