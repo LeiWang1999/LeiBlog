@@ -41,6 +41,7 @@ const HomeSchema = new mongoose.Schema({
   linkId: String,
   title: String,
   gist: String,
+  type: String,
   coverBase64: String,
   proments: Array
 });

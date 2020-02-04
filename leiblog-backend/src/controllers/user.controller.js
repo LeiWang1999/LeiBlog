@@ -1,4 +1,4 @@
-const { User, Cbzz, Technical, Life, Tszs, Material } = require("../db");
+const { User, Technical, Life, Material } = require("../db");
 
 getTechnicalResult = async reg => {
   const resultTechnical = await Technical.find({
@@ -6,12 +6,13 @@ getTechnicalResult = async reg => {
       //多条件，数组
       { title: { $regex: reg } },
       { gist: { $regex: reg } },
-      { date: { $regex: reg } },
+      { createtime: { $regex: reg } },
       { content: { $regex: reg } }
     ]
   }).sort({ _id: -1 });
   let result = [];
   let obj = {};
+
   resultTechnical.forEach(element => {
     obj._id = element._id;
     obj.title = element.title;
@@ -19,7 +20,11 @@ getTechnicalResult = async reg => {
     obj.clicktime = element.clicktime;
     obj.type = element.type;
     result.push(obj);
+    result.forEach(e=>{
+      console.log(e.title)
+    })
   });
+
   return result;
 };
 getLifeResult = async reg => {
@@ -99,7 +104,6 @@ module.exports = {
   search: async ctx => {
     const keywords = ctx.request.body.keywords;
     const reg = new RegExp(keywords, "i"); //不区分大小写
-
     const resultTechnical = await getTechnicalResult(reg);
     const resultLife = await getLifeResult(reg);
     const resultMaterial = await getMaterialResult(reg);

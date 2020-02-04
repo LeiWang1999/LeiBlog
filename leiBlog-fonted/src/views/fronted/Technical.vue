@@ -7,7 +7,7 @@
       <feed-card v-for="(article, i) in articleList" :key="i" :size="layout[i]" :value="article" />
     </v-layout>
     <div class="text-center">
-      <v-pagination total-visible="6" v-model="page" :length="length" @input="changePage"></v-pagination>
+      <v-pagination v-if="length > 1" total-visible="6" v-model="page" :length="length" @input="changePage"></v-pagination>
     </div>
   </v-container>
 </template>

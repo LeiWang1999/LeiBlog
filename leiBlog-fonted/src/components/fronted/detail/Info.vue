@@ -30,6 +30,6 @@ export default {
 
 <style scoped lang="scss">
 .detail {
-  font-size: 16px;
+  font-size: 18px;
 }
 </style>

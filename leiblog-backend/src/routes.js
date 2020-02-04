@@ -28,9 +28,9 @@ const TechnicalRoutes = new Router({ prefix: "/technical" })
   .post("/articalList", TechnicalController.getArticle)
   .post("/saveArticle", TechnicalController.saveArticle)
   .post("/updateArticle", TechnicalController.updateArticle)
+  .post("/updateClick", TechnicalController.updateClick)
   .post("/deleteArticle", TechnicalController.deleteArticle)
   .post("/uploadfile", TechnicalController.uploadFile);
-
 const LifeRoutes = new Router({ prefix: "/life" })
   .get("/articleDetail/:id", LifeController.getOneArticle)
   .post("/articalList", LifeController.getArticle)
@@ -44,6 +44,7 @@ const MaterialRoutes = new Router({ prefix: "/material" })
   .post("/fileList", MaterialController.getFile)
   .post("/saveFile", MaterialController.saveFile)
   .post("/updateFile", MaterialController.updateFile)
+  .post("/updateClick", MaterialController.updateClick)
   .post("/deleteFile", MaterialController.deleteFile)
   .post("/uploadfile", MaterialController.uploadFile);
 const CommentRoutes = new Router({ prefix: "/comment" })

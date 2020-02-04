@@ -16,7 +16,7 @@
             <h6 class="category text-gray font-weight-thin mb-3">Student / Njtech-University</h6>
             <h4 class="card-title font-weight-light">王磊</h4>
             <p class="card-description font-weight-light">{{content}}</p>
-            <v-btn block color="success" target href="https://github.com/NjtechPrinceling" text class="font-weight-light">Follow Me</v-btn>
+            <v-btn block color="success" href="https://github.com/NjtechPrinceling" text class="font-weight-light">Follow Me</v-btn>
           </v-card-text>
         </v-card>
       </v-flex>

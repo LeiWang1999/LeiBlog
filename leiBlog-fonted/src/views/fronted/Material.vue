@@ -16,14 +16,14 @@
             </span>
           </v-card-text>
           <v-card-text class="content">{{item.gist}}</v-card-text>
-          <v-btn color="primary" text :href="item.downloadlink">点击下载</v-btn>
+          <v-btn color="primary" text @click="updateCount(i)" :href="item.downloadlink">点击下载</v-btn>
         </v-card>
         <br />
       </v-flex>
     </v-layout>
 
     <div class="text-center">
-      <v-pagination total-visible="6" v-model="page" :length="length" @input="changePage"></v-pagination>
+      <v-pagination v-if="length > 1" total-visible="6" v-model="page" :length="length" @input="changePage"></v-pagination>
     </div>
   </div>
 </template>
@@ -65,15 +65,10 @@ export default {
         })
         .catch(err => window.console.log(err));
     },
-    search() {},
     updateCount(index) {
-      let obj = this.files[index];
-      if (obj.downloadtime) {
-        obj.downloadtime = obj.downloadtime + 1;
-      } else {
-        obj["downloadtime"] = 1;
-      }
-      this.request.post("material/updateFile", { fileInfo: obj });
+      let obj = {};
+      obj._id = this.files[index]._id;
+      this.request.post("material/updateClick", { fileInfo: obj }).then(()=>{this.fetchData()});
     },
     changePage(page) {
       this.page = page;

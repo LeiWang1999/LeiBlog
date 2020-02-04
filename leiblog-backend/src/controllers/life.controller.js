@@ -122,7 +122,7 @@ module.exports = {
           content: res.content,
           coverBase64: res.coverBase64,
           videolink: res.videolink,
-          clicktime: articleInfo.clicktime
+          clicktime: res.clicktime + 1
         };
         Life.updateOne({ _id: articleInfo._id }, obj, err => {
           if (err) throw err;

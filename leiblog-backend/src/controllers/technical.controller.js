@@ -106,6 +106,35 @@ module.exports = {
       message: "更新成功"
     };
   },
+  updateClick: async ctx => {
+    let request = ctx.request;
+    let articleInfo = request.body["Info"];
+    console.log(articleInfo);
+    await Technical.findById(articleInfo._id, (err, res) => {
+      if (err) throw err;
+      else {
+        let obj = {
+          type: res.type,
+          title: res.title,
+          updatetime: res.updatetime,
+          gist: res.gist,
+          tag: res.tag,
+          content: res.content,
+          coverBase64: res.coverBase64,
+          videolink: res.videolink,
+          clicktime: res.clicktime+1
+        };
+        Technical.updateOne({ _id: articleInfo._id }, obj, err => {
+          if (err) throw err;
+          else console.log("更新" + articleInfo._id + "成功");
+        });
+      }
+    });
+    ctx.body = {
+      success: true,
+      message: "更新成功"
+    };
+  },
   deleteArticle: async ctx => {
     let request = ctx.request;
     let articleId = request.body["articleId"];

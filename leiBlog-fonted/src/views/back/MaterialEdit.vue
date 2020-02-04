@@ -31,7 +31,8 @@ export default {
   name: "materialedit",
   data() {
     return {
-            uploadPercentage: 0,
+      uploadPercentage: 0,
+      downloadtime:0,
       snackbar: false,
       warnningText: "",
       alertValue: false,
@@ -94,6 +95,7 @@ export default {
         .then(res => {
           let file = res.data.info;
           this.name = file.name;
+          this.downloadtime = file.downloadtime;
           this.updatetime = file.updatetime;
           this.gist = file.gist;
           this.downloadlink = file.downloadlink;
@@ -140,23 +142,27 @@ export default {
         let obj = {
           _id: this.$route.params.id,
           name: this.name,
+          downloadtime: this.downloadtime,
           updatetime: this.getDate(),
           gist: this.gist,
           downloadlink: this.downloadlink
         };
-        this.request.post("material/updateFile", { fileInfo: obj }).then(res => {
-          if (res.data.success == true) {
-            this.refreshFileList();
-            this.$snackbar.success("保存成功");
-          }
-        });
+        this.request
+          .post("material/updateFile", { fileInfo: obj })
+          .then(res => {
+            if (res.data.success == true) {
+              this.refreshFileList();
+              this.$snackbar.success("保存成功");
+            }
+          });
       } else {
         // create a new file info
         let obj = {
           name: this.name,
           updatetime: this.getDate(),
           gist: this.gist,
-          downloadlink: this.downloadlink
+          downloadlink: this.downloadlink,
+          downloadtime: 0
         };
         this.request({
           method: "post",

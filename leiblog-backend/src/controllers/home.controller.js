@@ -7,10 +7,23 @@ module.exports = {
       title: "",
       gist: "",
       linkId: "",
+      type: "",
       coverBase64: "",
-      proments: [null,null,null,null,null,null,null,null,null,null,null]
-    }
-    if(!res){
+      proments: [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    };
+    if (!res) {
       let newInfo = new Home(Info);
       await newInfo.save();
       let res1 = await Home.findOne({});
@@ -23,7 +36,6 @@ module.exports = {
       success: true,
       data: res
     };
-
   },
   updateInfo: async ctx => {
     let obj = ctx.request.body.obj;

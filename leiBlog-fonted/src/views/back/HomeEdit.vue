@@ -58,7 +58,8 @@ export default {
         null,
         null,
         null
-      ]
+      ],
+      type:""
     };
   },
   mounted() {
@@ -105,6 +106,7 @@ export default {
         title: this.currentArticle.title,
         gist: this.currentArticle.gist,
         linkId: this.currentArticle._id,
+        type: this.currentArticle.type,
         coverBase64: this.currentArticle.coverBase64,
         proments: this.proments
       };

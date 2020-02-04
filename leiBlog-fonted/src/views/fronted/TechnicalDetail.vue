@@ -1,7 +1,7 @@
 <template>
   <v-container grid-list-xl>
     <v-layout row wrap>
-      <v-flex offset-xs2 xs12 md8>
+      <v-flex xs12 >
         <Info :source="source" />
         <div v-if="source.videolink">
           <Player :source="source" />

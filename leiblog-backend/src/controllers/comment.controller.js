@@ -35,12 +35,16 @@ module.exports = {
       page = 1;
     }
 
-    let Messages = await Comment.find()
+    let dataSend = await Comment.find()
       .sort({ _id: -1 })
       .skip((page - 1) * limit)
       .limit(limit);
-    let { dataSend, dataReplied } = await getAll(Messages);
-    let totalLength = await Comment.find({'isreplied':true}).countDocuments();
+    let dataReplied = await Comment.find({ isreplied: true })
+      .sort({ _id: -1 })
+      .skip((page - 1) * limit)
+      .limit(limit);
+
+    let totalLength = await Comment.find({ isreplied: true }).countDocuments();
     ctx.body = {
       success: true,
       message: dataSend,

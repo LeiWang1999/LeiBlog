@@ -99,6 +99,31 @@ module.exports = {
       message: "更新成功"
     };
   },
+  updateClick: async ctx => {
+    let request = ctx.request;
+    let fileInfo = request.body["fileInfo"];
+    console.log(fileInfo);
+    await Material.findById(fileInfo._id, (err, res) => {
+      if (err) throw err;
+      else {
+        let obj = {
+          name: res.name,
+          updatetime: res.updatetime,
+          gist: res.gist,
+          downloadlink: res.downloadlink,
+          downloadtime: res.downloadtime + 1
+        };
+        Material.updateOne({ _id: fileInfo._id }, obj, err => {
+          if (err) throw err;
+          else console.log("更新" + fileInfo._id + "成功");
+        });
+      }
+    });
+    ctx.body = {
+      success: true,
+      message: "更新成功"
+    };
+  },
   deleteFile: async ctx => {
     let request = ctx.request;
     let fileId = request.body["fileId"];
