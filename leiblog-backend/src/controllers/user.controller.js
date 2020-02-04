@@ -11,18 +11,15 @@ getTechnicalResult = async reg => {
     ]
   }).sort({ _id: -1 });
   let result = [];
-  let obj = {};
 
   resultTechnical.forEach(element => {
+    var obj = {};
     obj._id = element._id;
     obj.title = element.title;
     obj.createtime = element.createtime;
     obj.clicktime = element.clicktime;
     obj.type = element.type;
     result.push(obj);
-    result.forEach(e=>{
-      console.log(e.title)
-    })
   });
 
   return result;
@@ -38,8 +35,9 @@ getLifeResult = async reg => {
     ]
   }).sort({ _id: -1 });
   let result = [];
-  let obj = {};
   resultLife.forEach(element => {
+    var obj = {};
+
     obj._id = element._id;
     obj.title = element.title;
     obj.gist = element.gist;
@@ -63,8 +61,8 @@ getMaterialResult = async reg => {
     ]
   }).sort({ _id: -1 });
   let result = [];
-  let obj = {};
   resultMaterial.forEach(element => {
+    var obj = {};
     obj._id = element._id;
     obj.title = element.name;
     obj.date = element.updatetime;
