@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"leiblog.about"}],"uuid":"58f37a3765b8457b8d3d6876f658e07e"}
