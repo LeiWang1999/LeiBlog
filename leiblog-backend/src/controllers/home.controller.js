@@ -27,7 +27,6 @@ module.exports = {
   },
   updateInfo: async ctx => {
     let obj = ctx.request.body.obj;
-    console.log(obj);
     await Home.updateOne({}, obj, err => {
       if (err) throw err;
       else console.log("更新Home成功");

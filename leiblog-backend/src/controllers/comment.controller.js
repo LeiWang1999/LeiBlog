@@ -70,7 +70,6 @@ module.exports = {
   updateMessage: async ctx => {
     let request = ctx.request;
     let Info = request.body["info"];
-    console.log(Info);
     await Comment.findById(Info._id, (err, res) => {
       if (err) throw err;
       else {

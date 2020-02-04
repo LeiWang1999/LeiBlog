@@ -36,6 +36,7 @@ const LifeRoutes = new Router({ prefix: "/life" })
   .post("/articalList", LifeController.getArticle)
   .post("/saveArticle", LifeController.saveArticle)
   .post("/updateArticle", LifeController.updateArticle)
+  .post("/updateClick", LifeController.updateClick)
   .post("/deleteArticle", LifeController.deleteArticle)
   .post("/uploadfile", LifeController.uploadFile);
 const MaterialRoutes = new Router({ prefix: "/material" })
