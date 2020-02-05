@@ -30,12 +30,10 @@ module.exports = {
         type: element["type"],
         createtime: element["createtime"],
         updatetime: element["updatetime"],
-        content: element["content"],
         tag: element["tag"],
         title: element["title"],
         gist: element["gist"],
         coverBase64: element["coverBase64"],
-        videolink: element["videolink"],
         clicktime: element["clicktime"]
       };
       dataSend.push(obj);
