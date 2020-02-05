@@ -1,6 +1,6 @@
 <template>
   <v-flex xs12 :class="classes">
-    <base-card :height="value.prominent ? 450 : 350" color="grey lighten-1" dark href="#!">
+    <base-card @click.stop="handleRead" :height="value.prominent ? 450 : 350" color="grey lighten-1" dark href="#!">
       <v-img
         :src="value.coverBase64"
         height="100%"
@@ -29,7 +29,7 @@
               color="primary"
               label
               small
-              @click.stop="handleRead"
+              
             >Read More</v-chip>
             <v-btn text text-color="white" small>
               <v-icon small>mdi-eye</v-icon>
