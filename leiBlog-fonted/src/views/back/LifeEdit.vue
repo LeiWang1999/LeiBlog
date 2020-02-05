@@ -63,7 +63,7 @@ export default {
       alertValue: false,
       tag: "",
       cover: [],
-      clicktime:0,
+      clicktime: 0,
       coverBase64: "",
       updatetime: "",
       content: "",
@@ -137,10 +137,20 @@ export default {
         plugins: plugins,
         toolbar1: toolbar.toobar1,
         toolbar2: toolbar.toobar2,
-        images_upload_handler: (blobInfo, success) => {
-          success(
-            "data:" + blobInfo.blob().type + ";base64," + blobInfo.base64()
-          );
+        images_upload_handler: async (blobInfo, success, ) => {
+          let file = blobInfo.blob();
+          let formDataFinish = await this.uploadBigFile(file);
+          this.request
+            .post("/file/uploadBigFileFinish", formDataFinish)
+            .then(res => {
+              if (res.data.code == 1) {
+                this.uploadPercentage = 0;
+                success(res.data.data.downloadPath);
+                this.$snackbar.success("图片上传成功");
+              } else {
+                this.$snackbar.success("图片上传失败,请重新上传");
+              }
+            });
         }
       }
     };
@@ -253,6 +263,20 @@ export default {
       this.$router.push({ name: "lifelist" });
     },
     async changeFile(file) {
+      let formDataFinish = await this.uploadBigFile(file);
+      this.request
+        .post("/file/uploadBigFileFinish", formDataFinish)
+        .then(res => {
+          if (res.data.code == 1) {
+            this.uploadPercentage = 0;
+            this.videolink = res.data.data.downloadPath;
+            this.$snackbar.success("文件上传成功");
+          } else {
+            this.$snackbar.success("文件上传失败,请重新上传");
+          }
+        });
+    },
+    async uploadBigFile(file) {
       let _this = this;
 
       let bytesPerPiece = 1 * 256 * 1024; //切片大小
@@ -292,21 +316,12 @@ export default {
       formDataFinish.append("name", file_name);
       formDataFinish.append("size", file_size);
       formDataFinish.append("total", totalPieces);
-
-      this.request
-        .post("/file/uploadBigFileFinish", formDataFinish)
-        .then(res => {
-          if (res.data.code == 1) {
-            this.uploadPercentage = 0;
-            this.videolink = res.data.data.downloadPath;
-            this.$snackbar.success("文件上传成功");
-          } else {
-            this.$snackbar.success("文件上传失败,请重新上传");
-          }
-        });
+      return formDataFinish;
     },
-    changeCover() {
+    changeCover(file) {
       // 获取图片的大小，做大小限制有用
+              window.console.log(file)
+
       let _this = this;
       let imgSize = this.cover.size;
       if (imgSize <= 10 * 1024 * 1024) {

@@ -86,7 +86,6 @@ export default {
         }
         articles.push(element2);
       }
-      window.console.log(articles);
       return articles;
     },
     length() {
