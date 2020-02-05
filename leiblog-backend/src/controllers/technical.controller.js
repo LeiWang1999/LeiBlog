@@ -18,10 +18,13 @@ module.exports = {
     }
     let limit = ctx.request.body.limit;
     let totalLength = await Technical.countDocuments();
+    console.log("打印total length");
     let res = await Technical.find({})
       .sort({ _id: -1 })
       .skip((page - 1) * limit)
       .limit(limit);
+      console.log("打印res");
+
     let dataSend = [];
     for (let i = 0; i < res.length; i++) {
       const element = res[i];
@@ -36,6 +39,8 @@ module.exports = {
         coverBase64: element["coverBase64"],
         clicktime: element["clicktime"]
       };
+      console.log("datasend");
+
       dataSend.push(obj);
     }
     ctx.body = {

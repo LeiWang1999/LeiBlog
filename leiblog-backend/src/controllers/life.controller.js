@@ -18,10 +18,14 @@ module.exports = {
     }
     let limit = ctx.request.body.limit;
     let totalLength = await Life.countDocuments();
+    
+    console.log("打印 totalLength 2");
     let res = await Life.find({})
       .sort({ _id: -1 })
       .skip((page - 1) * limit)
       .limit(limit);
+      console.log("打印 res 2");
+
     let dataSend = [];
     for (let i = 0; i < res.length; i++) {
       const element = res[i];
@@ -36,6 +40,8 @@ module.exports = {
         coverBase64: element["coverBase64"],
         clicktime: element["clicktime"]
       };
+      console.log("打印 datasend 2");
+
       dataSend.push(obj);
     }
     ctx.body = {
