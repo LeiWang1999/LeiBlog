@@ -11,7 +11,6 @@
         :value="article"
       />
     </v-layout>
-
   </v-container>
 </template>
 
@@ -72,14 +71,28 @@ export default {
 
   computed: {
     paginatedArticles() {
-      let articles = this.technicalarticles.concat(this.lifearticles);
-      return articles
+      let articles = [];
+      var element = this.technicalarticles[0];
+      articles.push(element);
+      for (let index = 0; index < 5; index++) {
+        var element1 = this.lifearticles[index];
+        if (!element1) {
+          break;
+        }
+        articles.push(element1);
+        var element2 = this.technicalarticles[index + 1];
+                if (!element2) {
+          break;
+        }
+        articles.push(element2);
+      }
+      window.console.log(articles);
+      return articles;
     },
     length() {
       let articles = this.technicalarticles.concat(this.lifearticles);
       return Math.ceil(articles.length / 11);
     }
-  },
-
+  }
 };
 </script>
