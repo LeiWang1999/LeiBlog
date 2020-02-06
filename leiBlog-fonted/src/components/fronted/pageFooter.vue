@@ -1,6 +1,6 @@
 <template lang="html">
   <div>
-    <v-footer height="88"  class="justify-center">
+    <v-footer height="88" dark class="grey darken-4 justify-center">
       <v-layout row wrap>
         <span
           >Made with <v-icon small color="red lighten-1">mdi-heart</v-icon> by
@@ -14,6 +14,10 @@
         |
         <span class="grey--text">昨天点击:</span>
         <span >{{uvBefore}}</span>
+        <span class="grey--text">次</span>
+        |       
+        <span class="grey--text">总访问:</span>
+        <span >{{uvTotal}}</span>
         <span class="grey--text">次</span>
       </div>
       </v-layout>
@@ -41,6 +45,7 @@ export default {
   data: () => ({
     uv: 0,
     uvBefore: 0,
+    uvTotal: 0,
     record1: "",
     record2: ""
   }),
@@ -53,6 +58,7 @@ export default {
       .then(res => {
         this.uv = res.data.uvToday;
         this.uvBefore = res.data.uvBefore;
+        this.uvTotal = res.data.uvTotal;
       });
       this.request
         .post("/record/getRecord").then(res => {

@@ -2,7 +2,7 @@
   <v-flex xs12 :class="classes">
     <base-card @click.stop="handleRead" :height="value.prominent ? 450 : 350" color="grey lighten-1" dark href="#!">
       <v-img
-        :src="value.coverBase64"
+        :src="value.coverUrl"
         height="100%"
         gradient="rgba(0, 0, 0, .42), rgba(0, 0, 0, .42)"
       >

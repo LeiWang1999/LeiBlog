@@ -22,7 +22,7 @@
         <span>Selected: {{ currentArticleId }}</span>
       </v-card-text>
       <base-card dark>
-        <v-img class="grey lighten-2" height="400" width="100%" :src="currentArticle.coverBase64">
+        <v-img class="grey lighten-2" height="400" width="100%" :src="currentArticle.coverUrl">
           <v-layout fill-height align-center pa-3>
             <v-flex xs12 md7 offset-md5>
               <h1 class="display-3 font-weight-light">{{currentArticle.title}}</h1>
@@ -107,7 +107,7 @@ export default {
         gist: this.currentArticle.gist,
         linkId: this.currentArticle._id,
         type: this.currentArticle.type,
-        coverBase64: this.currentArticle.coverBase64,
+        coverUrl: this.currentArticle.coverUrl,
         proments: this.proments
       };
       this.request.post("/home/updateDetail", { obj }).then(res => {

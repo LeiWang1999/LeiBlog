@@ -10,7 +10,7 @@
     </v-row>
 
     <div v-ripple="{ center: true }" class="text-center">
-      <img :src="coverBase64" height="300px" width="500px" />
+      <img :src="coverUrl" height="300px" width="500px" />
     </div>
     <v-file-input
       v-model="cover"
@@ -64,7 +64,7 @@ export default {
       tag: "",
       cover: [],
       clicktime: 0,
-      coverBase64: "",
+      coverUrl: "",
       updatetime: "",
       content: "",
       title: "",
@@ -166,7 +166,7 @@ export default {
           this.content = article.content;
           this.tag = article.tag;
           this.clicktime = article.clicktime;
-          this.coverBase64 = article.coverBase64;
+          this.coverUrl = article.coverUrl;
           this.updatetime = article.updatetime;
           this.gist = article.gist;
           this.videolink = article.videolink;
@@ -204,7 +204,7 @@ export default {
         this.$snackbar.success("标签不能为空");
         return;
       }
-      if (this.coverBase64.length === 0) {
+      if (this.coverUrl.length === 0) {
         this.$snackbar.success("封面不能为空");
         return;
       }
@@ -219,7 +219,7 @@ export default {
           gist: this.gist,
           tag: this.tag,
           clicktime: this.clicktime,
-          coverBase64: this.coverBase64,
+          coverUrl: this.coverUrl,
           content: this.content,
           videolink: this.videolink
         };
@@ -237,7 +237,7 @@ export default {
           createtime: this.getDate(),
           gist: this.gist,
           tag: this.tag,
-          coverBase64: this.coverBase64,
+          coverUrl: this.coverUrl,
           clicktime: 0,
           content: this.content,
           videolink: this.videolink
@@ -318,22 +318,24 @@ export default {
       formDataFinish.append("total", totalPieces);
       return formDataFinish;
     },
-    changeCover(file) {
+    async changeCover(file) {
       // 获取图片的大小，做大小限制有用
-              window.console.log(file)
-
-      let _this = this;
       let imgSize = this.cover.size;
       if (imgSize <= 10 * 1024 * 1024) {
         this.$snackbar.success("大小合适");
-        // base64方法
-        var reader = new FileReader();
-        reader.readAsDataURL(_this.cover); // 读出 base64
-        reader.onloadend = function() {
-          // 图片的 base64 格式, 可以直接当成 img 的 src 属性值
-          var dataURL = reader.result;
-          _this.coverBase64 = dataURL;
-        };
+        // Url方法
+        let formDataFinish = await this.uploadBigFile(file);
+        this.request
+        .post("/file/uploadBigFileFinish", formDataFinish)
+        .then(res => {
+          if (res.data.code == 1) {
+            this.uploadPercentage = 0;
+            this.coverUrl = res.data.data.downloadPath;
+            this.$snackbar.success("图片上传成功");
+          } else {
+            this.$snackbar.success("图片上传失败,请重新上传");
+          }
+        });
       } else {
         this.$snackbar.success("大小不合适");
       }

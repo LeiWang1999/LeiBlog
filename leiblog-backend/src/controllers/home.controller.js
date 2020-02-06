@@ -8,7 +8,7 @@ module.exports = {
       gist: "",
       linkId: "",
       type: "",
-      coverBase64: "",
+      coverUrl: "",
       proments: [
         null,
         null,

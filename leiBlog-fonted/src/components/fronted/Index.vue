@@ -1,6 +1,7 @@
 <template>
   <v-app>
     <Navbar />
+
     <v-content>
       <transition appear name="fade">
         <router-view />
@@ -20,8 +21,7 @@ export default {
     Navbar,
     pageFooter
   },
-  data: () => ({
-  }),
+  data: () => ({}),
   mounted() {
     this.request({
       method: "get",
@@ -50,7 +50,7 @@ export default {
         visitInfo.browser = visitInfo2[1];
         visitInfo.browserVersion = visitInfo2[2];
         visitInfo.date = this.getDate();
-                this.request.post("/history/updateHistory", { info: visitInfo });
+        this.request.post("/history/updateHistory", { info: visitInfo });
       });
   },
   methods: {

@@ -31,7 +31,7 @@ const articleSchema = new mongoose.Schema({
 const AboutSchema = new mongoose.Schema({
   content: String,
   updatetime: String,
-  avatarBase64: String,
+  avatarUrl: String,
   email: String,
   phone: String,
   detailContent: String
@@ -42,7 +42,7 @@ const HomeSchema = new mongoose.Schema({
   title: String,
   gist: String,
   type: String,
-  coverBase64: String,
+  coverUrl: String,
   proments: Array
 });
 
@@ -52,7 +52,7 @@ const lifeSchema = new mongoose.Schema({
   title: String,
   gist: String,
   content: String,
-  coverBase64: String,
+  coverUrl: String,
   tag: String,
   videolink: String,
   createtime: String,
@@ -66,7 +66,7 @@ const technicalSchema = new mongoose.Schema({
   gist: String,
   content: String,
   tag: String,
-  coverBase64: String,
+  coverUrl: String,
   videolink: String,
   createtime: String,
   updatetime: String,

@@ -15,22 +15,31 @@ const routes = [
       {
         path: "home",
         name: "home",
-        component: () => import("../views/fronted/Home.vue")
+        component: () => import("../views/fronted/Home.vue"),
+        meta: {
+          title: "Welcome !"
+        }
       },
       {
         path: "technical",
         name: "technical",
-        component: () => import("../views/fronted/Technical.vue")
+        component: () => import("../views/fronted/Technical.vue"),
+        meta: {
+          title: "Technical"
+        }
       },
       {
         path: "life",
         name: "life",
-        component: () => import("../views/fronted/Life.vue")
+        component: () => import("../views/fronted/Life.vue"),
+        meta: {
+          title: "Life"
+        }
       },
       {
         path: "technicaldetail/:id",
         name: "technicaldetail",
-        component: () => import("@/views/fronted/TechnicalDetail.vue"),
+        component: () => import("@/views/fronted/TechnicalDetail.vue")
       },      {
         path: "lifedetail/:id",
         name: "lifedetail",
@@ -39,30 +48,45 @@ const routes = [
       {
         path: "material",
         name: "material",
-        component: () => import("../views/fronted/Material.vue")
+        component: () => import("../views/fronted/Material.vue"),
+        meta: {
+          title: "Material"
+        }
       },
       {
 
         path: "about",
         name: "about",
-        component: () => import("../views/fronted/About.vue")
+        component: () => import("../views/fronted/About.vue"),
+        meta: {
+          title: "About"
+        }
       },
       {
         path: "comment",
         name: "comment-fonted",
-        component: () => import("../views/fronted/Comment.vue")
+        component: () => import("../views/fronted/Comment.vue"),
+        meta: {
+          title: "Comment"
+        }
       },
       {
         path: "search/:keywords",
         name: "search",
-        component: () => import("../views/fronted/SearchPage.vue")
+        component: () => import("../views/fronted/SearchPage.vue"),
+        meta: {
+          title: "Search Result"
+        }
       }
     ]
   },
   {
     path: "/login",
     name: "Login",
-    component: Login
+    component: Login,
+    meta: {
+      title: "Login"
+    }
   },
   {
     path: "/admin",
@@ -197,6 +221,9 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  if (to.meta.title) {
+    document.title = to.meta.title
+  }
   if (to.name == "Login") {
     if (localStorage.getItem("accessToken")) {
       next(from.path);

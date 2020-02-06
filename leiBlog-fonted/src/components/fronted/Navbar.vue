@@ -1,11 +1,10 @@
 <template>
   <nav>
-    <v-app-bar flat fixed app  class="white">
-      <router-link to="/" >
-        <v-toolbar-title class="headline">
-          <span>Blog</span>
-        </v-toolbar-title>
-      </router-link>
+    <v-app-bar flat fixed app class="white">
+      <v-toolbar-title @click="drawer = !drawer" class="headline primary--text">
+        <span>Lei</span>
+        <span>Blog</span>
+      </v-toolbar-title>
       <v-spacer></v-spacer>
 
       <v-toolbar-items class="hidden-sm-and-down">
@@ -22,12 +21,18 @@
         @keyup.enter="search"
       ></v-text-field>
     </v-app-bar>
+    <Drawer :drawer="drawer" />
   </nav>
 </template>
 
 <script>
+import Drawer from "@/components/fronted/core/Drawer";
+
 export default {
   name: "navbar",
+  components: {
+    Drawer
+  },
   data() {
     return {
       drawer: false,

@@ -1,7 +1,7 @@
 <template>
   <v-container grid-list-xl>
     <v-layout row wrap>
-      <v-flex xs12 >
+      <v-flex xs12>
         <Info :source="source" />
         <div v-if="source.videolink">
           <Player :source="source" />
@@ -32,6 +32,7 @@ export default {
         .get("/technical/articleDetail/" + this.$route.params.id)
         .then(res => {
           this.source = res.data.info;
+          document.title = this.source.title;
         });
     }
   }

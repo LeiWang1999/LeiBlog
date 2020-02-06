@@ -56,7 +56,7 @@
           </v-card>
         </v-col>
       </v-row>
-      <v-pagination total-visible="6" v-model="page" :length="length" @input="changePage"></v-pagination>
+      <v-pagination v-if="length > 1" total-visible="6" v-model="page" :length="length" @input="changePage"></v-pagination>
     </v-container>
     <v-snackbar v-model="snackbar" :timeout="1500" :top="true">{{warnningText}}</v-snackbar>
   </div>
@@ -101,7 +101,7 @@ export default {
     };
   },
   mounted() {
-      this.$store.commit("setLevel", 2);
+    this.$store.commit("setLevel", 2);
     this.$store.commit("setTitle", ["导航", "用户留言"]);
     this.fetchInfo();
   },

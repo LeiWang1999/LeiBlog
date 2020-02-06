@@ -10,6 +10,18 @@ const {
   DATE_ENUM,
   DATE_PROP_TYPE
 } = require("myjs-common");
+var COS = require('cos-nodejs-sdk-v5');
+
+var cos = new COS({
+  SecretId: 'AKIDfFxQdbMU5QXTCmuGagaGiz1qPjqiD6fy',
+  SecretKey: 'DNI1Zsw2e3CDeqnVzDB0c094kCXWdXFi',
+});
+
+var tengxun_cos = {
+  Bucket: 'leiblog-1301208363',
+  Region: 'ap-nanjing',
+}
+
 // 文件上传
 
 module.exports = {
@@ -20,10 +32,10 @@ module.exports = {
 
     let { fields, uploadfile } = await new Promise((resolve, reject) => {
       form.parse(ctx.req, (err, fields, files) => {
-        if(files){
+        if (files) {
           let uploadfile = files.file[0];
           resolve({ fields, uploadfile });
-        }else{
+        } else {
           ctx.body = {
             code: 0,
             msg: "上传失败继续传输"
@@ -47,7 +59,7 @@ module.exports = {
   uploadBigFileFinish: async (ctx, next) => {
     let now = new MyDate();
     let curDate = now.format(DATE_FORMATTER.DATE_FORMAT);
-    
+
     let uploadPath = path.resolve(__dirname, "../upload"); //'F:\\aitools_node\\upload'
 
     let form = new multiparty.Form();
@@ -56,9 +68,10 @@ module.exports = {
         resolve(fields);
       });
     });
-    const { timestamp, name, size, total } = fields;
+    let { timestamp, name, size, total } = fields;
+    name = name[0];
     let newFileDir = fileStorePath + "/" + curDate;
-    let newFilePath = newFileDir + "/" + name ;
+    let newFilePath = newFileDir + "/" + name;
     let downloadPath = fileServerPath + "/" + curDate + "/" + name;
 
     // 创建存储文件
@@ -94,7 +107,6 @@ module.exports = {
 
       let existed = await new Promise((resolve, reject) => {
         fs.exists(newFileDir, existed => {
-          console.log(existed);
           if (existed) {
             resolve(true);
           } else {
@@ -102,19 +114,48 @@ module.exports = {
           }
         });
       });
+      let key = Date.now() + name;
+      let FileSrc = 'https://leiblog-1301208363.cos.ap-nanjing.myqcloud.com/' + key;;
       if (existed) {
-        fs.renameSync(filePath, newFilePath); //重命名
+        var params = {
+          Bucket: tengxun_cos.Bucket,                         /* 必须 */
+          Region: tengxun_cos.Region,                         /* 必须 */
+          Key: key,                                           /* 必须 */
+          FilePath: filePath,                                /* 必须 */
+        }
+        cos.sliceUploadFile(params, function (err, data) {
+          if (err) {
+            throw err;
+          } else {
+            fs.renameSync(filePath, newFilePath)
+          }
+        }); //重命名
       } else {
-        fs.mkdir(newFileDir, function(err) {
+        fs.mkdir(newFileDir, function (err) {
           if (err) throw err;
-          fs.renameSync(filePath, newFilePath); //重命名
-        });
+          var params = {
+            Bucket: tengxun_cos.Bucket,                         /* 必须 */
+            Region: tengxun_cos.Region,                         /* 必须 */
+            Key: key,                                           /* 必须 */
+            FilePath: filePath,                                /* 必须 */
+          }
+          cos.sliceUploadFile(params, function (err, data) {
+            if (err) {
+              throw err;
+            } else {
+              fs.renameSync(filePath, newFilePath);
+            }
+          }); //重命名
+        })
       }
+
+      console.log(FileSrc)
       ctx.body = {
         code: 1,
         msg: "切片文件合并成功",
         data: {
-          downloadPath: downloadPath,
+          downloadPath: FileSrc,
+          showPath: downloadPath,
           url: timestamp + name
         }
       };

@@ -19,12 +19,10 @@ module.exports = {
     let limit = ctx.request.body.limit;
     let totalLength = await Life.countDocuments();
     
-    console.log("打印 totalLength 2");
     let res = await Life.find({})
       .sort({ _id: -1 })
       .skip((page - 1) * limit)
       .limit(limit);
-      console.log("打印 res 2");
 
     let dataSend = [];
     for (let i = 0; i < res.length; i++) {
@@ -37,11 +35,9 @@ module.exports = {
         tag: element["tag"],
         title: element["title"],
         gist: element["gist"],
-        coverBase64: element["coverBase64"],
+        coverUrl: element["coverUrl"],
         clicktime: element["clicktime"]
       };
-      console.log("打印 datasend 2");
-
       dataSend.push(obj);
     }
     ctx.body = {
@@ -95,7 +91,7 @@ module.exports = {
           gist: articleInfo.gist,
           tag: articleInfo.tag,
           content: articleInfo.content,
-          coverBase64: articleInfo.coverBase64,
+          coverUrl: articleInfo.coverUrl,
           videolink: articleInfo.videolink,
           clicktime: articleInfo.clicktime
         };
@@ -124,7 +120,7 @@ module.exports = {
           gist: res.gist,
           tag: res.tag,
           content: res.content,
-          coverBase64: res.coverBase64,
+          coverUrl: res.coverUrl,
           videolink: res.videolink,
           clicktime: res.clicktime + 1
         };

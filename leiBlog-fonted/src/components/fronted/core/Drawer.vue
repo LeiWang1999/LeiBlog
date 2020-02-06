@@ -1,62 +1,45 @@
 <template>
-  <v-navigation-drawer
-    v-model="drawer"
-    app
-    dark
-    temporary
-  >
-    <v-list>
-      <v-list-tile
-        v-for="(link, i) in links"
-        :key="i"
-        :to="link.to"
-        :href="link.href"
-        @click="onClick($event, link)"
-      >
-        <v-list-tile-title v-text="link.text" />
-      </v-list-tile>
+  <v-navigation-drawer v-model="drawer" absolute temporary>
+    <v-list dense>
+      <v-list-item>
+        <v-list-item-content>
+          <v-list-item-title>Drawer — for phone</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+
+      <v-divider></v-divider>
+      <v-list-item v-for="(link,i) in links" :key="i" link>
+        <v-list-item-content>
+          <v-btn text router :to="link.route">
+            <v-icon>{{ link.icon }}</v-icon>
+            {{link.text}}
+          </v-btn>
+        </v-list-item-content>
+      </v-list-item>
     </v-list>
   </v-navigation-drawer>
 </template>
 
 <script>
-  // Utilities
-  import {
-    mapGetters,
-    mapMutations
-  } from 'vuex'
-
-  export default {
-    name: 'CoreDrawer',
-
-    computed: {
-      ...mapGetters(['links']),
-      drawer: {
-        get () {
-          return this.$store.state.drawer
-        },
-        set (val) {
-          this.setDrawer(val)
-        }
-      }
-    },
-
-    methods: {
-      ...mapMutations(['setDrawer']),
-      onClick (e, item) {
-        e.stopPropagation()
-
-        if (item.to === '/') {
-          this.$vuetify.goTo(0)
-          this.setDrawer(false)
-          return
-        }
-
-        if (item.to || !item.href) return
-
-        this.$vuetify.goTo(item.href)
-        this.setDrawer(false)
-      }
+export default {
+  name: "CoreDrawer",
+  data() {
+    return {
+      links: [
+        { text: "Home", route: "/", icon: "mdi-home-city" },
+        { text: "Technical", route: "/technical" , icon: "mdi-gavel" },
+        { text: "Life", route: "/life" , icon: "mdi-camera"},
+        { text: "Material", route: "/material", icon: "mdi-folder" },
+        { text: "About Me", route: "/about", icon: "mdi-account" },
+        { text: "Comment", route: "/comment", icon: "mdi-message-text" }
+      ]
+    };
+  },
+  props: {
+    drawer: {
+      default: false,
+      type: Boolean
     }
   }
+};
 </script>

@@ -5,6 +5,7 @@ module.exports = {
     let date = ctx.request.body.date;
     let dateBefore = ctx.request.body.dateBefore;
     let reg = new RegExp(date, "i"); //不区分大小写
+    const resultHistoryTotal = await History.countDocuments();
     const resultHistoryToday = await History.find({
       $or: [{ date: { $regex: reg } }]
     }).sort({ _id: -1 });
@@ -16,7 +17,8 @@ module.exports = {
     ctx.body = {
         success:true,
         uvToday : resultHistoryToday.length,
-        uvBefore: resultHistoryBefore.length
+        uvBefore: resultHistoryBefore.length,
+        uvTotal : resultHistoryTotal
     }
   },
   updateHistory: async ctx => {

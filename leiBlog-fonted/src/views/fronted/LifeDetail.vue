@@ -32,6 +32,7 @@ export default {
         .get("/life/articleDetail/" + this.$route.params.id)
         .then(res => {
           this.source = res.data.info;
+          document.title = this.source.title;
         });
     }
   }

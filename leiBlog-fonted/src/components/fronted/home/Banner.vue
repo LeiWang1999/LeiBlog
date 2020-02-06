@@ -1,6 +1,6 @@
 <template>
   <base-card dark>
-    <v-img class="grey lighten-2" height="400" width="100%" :src="coverBase64">
+    <v-img class="grey lighten-2" height="400" width="100%" :src="coverUrl">
       <v-layout fill-height align-center pa-3>
         <v-flex xs12 md7 offset-md5>
           <h1 class="display-3 font-weight-light">{{title}}</h1>
@@ -17,7 +17,7 @@ export default {
   data() {
     return {
       title: "",
-      coverBase64: "",
+      coverUrl: "",
       type: "",
       gist: "",
       clicktime: "",
@@ -28,7 +28,7 @@ export default {
     this.request.post("/home/detail").then(res => {
       let info = res.data.data;
       this.title = info.title;
-      this.coverBase64 = info.coverBase64;
+      this.coverUrl = info.coverUrl;
       this.gist = info.gist;
       this.type = info.type;
       this.linkId = info.linkId;
