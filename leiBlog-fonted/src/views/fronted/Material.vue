@@ -16,7 +16,7 @@
             </span>
           </v-card-text>
           <v-card-text class="content">{{item.gist}}</v-card-text>
-          <v-btn color="primary" text @click="updateCount(i)" :href="item.downloadlink">点击下载</v-btn>
+          <v-btn color="primary" text @click="updateCount(i)">点击下载</v-btn>
         </v-card>
         <br />
       </v-flex>
@@ -68,7 +68,9 @@ export default {
     updateCount(index) {
       let obj = {};
       obj._id = this.files[index]._id;
-      this.request.post("material/updateClick", { fileInfo: obj }).then(()=>{this.fetchData()});
+      this.request.post("material/updateClick", { fileInfo: obj }).then(()=>{
+        window.location.href = this.files[index].downloadlink;                 
+        this.fetchData()});
     },
     changePage(page) {
       this.page = page;
