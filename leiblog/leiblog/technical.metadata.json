@@ -1,1 +1,1 @@
-{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"leiblog.technical"}],"uuid":"c85ff93ab7614775a690d8c1bd983df8"}
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"leiblog.technical"}],"uuid":"a5882558f1d7454f9d3ccef98e3be4bf"}

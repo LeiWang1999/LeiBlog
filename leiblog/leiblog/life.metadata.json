@@ -1,1 +1,1 @@
-{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"leiblog.life"}],"uuid":"62c34855bffb4fccb739ebf73600095b"}
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"leiblog.life"}],"uuid":"7575d2f5224748eebdd897909bf83b5f"}

@@ -10,3 +10,7 @@ export default {
   components: {}
 };
 </script>
+
+<style >
+@import "~@/assets/fonts/robot.css";
+</style>
