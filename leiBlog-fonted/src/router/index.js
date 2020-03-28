@@ -37,10 +37,15 @@ const routes = [
         }
       },
       {
+        path: "game",
+        name: "game",
+        component: () => import("../views/fronted/Game.vue")
+      },
+      {
         path: "technicaldetail/:id",
         name: "technicaldetail",
         component: () => import("@/views/fronted/TechnicalDetail.vue")
-      },      {
+      }, {
         path: "lifedetail/:id",
         name: "lifedetail",
         component: () => import("@/views/fronted/LifeDetail.vue"),

@@ -41,6 +41,7 @@ export default {
         { text: "Home", route: "/" },
         { text: "Technical", route: "/technical" },
         { text: "Life", route: "/life" },
+        { text: "Game", route: "/game" },
         { text: "Material", route: "/material" },
         { text: "About Me", route: "/about" },
         { text: "Comment", route: "/comment" }
